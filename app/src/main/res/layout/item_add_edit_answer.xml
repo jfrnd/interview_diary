@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:paddingStart="24dp"
+    android:paddingEnd="16dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_move"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_swap"
+        android:tint="@color/gray"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ic_delete" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:src="@drawable/ic_delete"
+        android:tint="@color/red"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_headline"
+        app:layout_constraintEnd_toStartOf="@id/ic_move"
+        app:layout_constraintTop_toTopOf="@+id/tv_headline" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_number"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_headline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_headline"
+        app:srcCompat="@drawable/ic_question_answer"
+        tools:text="1:" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_headline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:hint="@string/add_edit_answer_item_type_prompt"
+        android:maxLines="3"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ic_delete"
+        app:layout_constraintStart_toEndOf="@+id/tv_number"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="very good" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

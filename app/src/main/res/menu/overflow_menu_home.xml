@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/btn_menu_export_csv"
+        android:icon="@drawable/ic_csv_excel"
+        android:title="@string/overflow_menu_export_as_csv"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/btn_menu_add_tracker"
+        android:title="@string/overflow_menu_create_new_tracker"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/btn_menu_add_example_trackers"
+        android:title="@string/overflow_menu_add_example_trackers"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/btn_menu_add_example_records"
+        android:title="@string/overflow_menu_add_example_records"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/btn_menu_clear_all_trackers"
+        android:title="@string/overflow_menu_clear_all_trackers"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/btn_backup"
+        android:title="@string/overflow_menu_backup_data"
+        app:showAsAction="never"
+        />
+</menu>

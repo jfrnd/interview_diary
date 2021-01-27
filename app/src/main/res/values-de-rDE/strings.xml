@@ -1,0 +1,143 @@
+<resources>
+    <string name="app_name">Track it yourself</string>
+    <string name="add_edit_switch_add_notes_headline">Notitzen</string>
+    <string name="fragment_title_edit_tracker">Fragekarte bearbeiten</string>
+    <string name="add_edit_switch_add_notes_body">Notitzfunktion für diese Fragekarte ein-/ausschalten</string>
+    <string name="add_edit_switch_multi_selection_headline">Mehrfachauswahl</string>
+    <string name="add_edit_switch_multi_selection_body">Mehrfachauswahl für diese Fragekarte ein-/ausschalten</string>
+    <string name="add_edit_unit_example">z.B. kg</string>
+    <string name="add_edit_dialog_erase_question_first">Du hast Antwortoptionen gelöscht, für die bereits Antworteinträge vorhanden sind:</string>
+    <string name="add_edit_dialog_erase_question_second">Was möchtest du tun?</string>
+    <string name="add_edit_dialog_erase_question_record_counter">mal vorhanden</string>
+    <string name="dialog_title_delete_tracker">Fragekarte löschen?</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="add_edit_default_value_headline">Anfangswert</string>
+    <string name="add_edit_min_value_headline">Minimum</string>
+    <string name="add_edit_max_value_headline">Maximum</string>
+    <string name="add_edit_default_value_body">Bestimme einen Anfangswert</string>
+    <string name="add_edit_min_value_body">Besteimme ein Minimum</string>
+    <string name="add_edit_max_value_body">Besteimme ein Maximum</string>
+    <string name="add_edit_unit_body">Bestimme eine Einheit</string>
+    <string name="add_edit_unit_headline">Einheit (optional)</string>
+    <string name="add_edit_dialog_edit_question_headline">Was möchtest du dich fragen?</string>
+    <string name="add_edit_dialog_edit_answer_headline">Wie könntest du antworten?</string>
+    <string name="add_edit_dialog_edit_def_val_headline">Bestimme einen Anfangswert</string>
+    <string name="add_edit_dialog_edit_min_val_headline">Besteimme ein Minimum</string>
+    <string name="add_edit_dialog_edit_max_val_headline">Bestimme ein Maximum</string>
+    <string name="add_edit_dialog_edit_unit_headline">Bestimme eine Einheit</string>
+    <string name="add_edit_save_invalid_input_still_loading">Es lädt noch. Bitte warten.</string>
+    <string name="add_edit_dialog_invalid_input_field_cannot_be_empty">Dieses Feld darf nicht leer bleiben</string>
+    <string name="add_edit_dialog_invalid_input_shorter_input">Deine Eingabe muss kürzer sein</string>
+    <string name="add_edit_dialog_invalid_input_invalid_character">Das Zeichen \";\" ist nicht erlaubt</string>
+    <string name="add_edit_save_invalid_input_create_more_answer_options">Bitte bestimme mindestens 2 Antwortoptionen</string>
+    <string name="add_edit_save_invalid_input_unique_answer_options">Jede Antwortoption darf nur einmal vorkommen</string>
+    <string name="add_edit_save_invalid_input_max_val_smaller_than_def_val">Das Maximum darf nicht kleiner als der Anfangswert sein</string>
+    <string name="add_edit_save_invalid_input_max_val_smaller_than_min_val">Das Maximum darf nicht kleiner als das Minimum sein</string>
+    <string name="add_edit_save_invalid_input_def_val_smaller_than_min_val">Der Anfangswert darf nicht kleiner als das Minimum sein</string>
+    <string name="add_edit_save_invalid_input_empty_fields">Antwortoptionen dürfen nicht leer bleiben</string>
+    <string name="dialog_title_clear_trackers">Clear all cards?</string>
+    <string name="overflow_menu_clear_all_trackers">Alle Fragekarten löschen</string>
+    <string name="dialog_confirm_clear_trackers">Bist du sicher, dass du alle Fragekarten löschen möchtest?</string>
+    <string name="fragment_title_add_new_tracker">Fragekarte hinzufügen</string>
+    <string name="home_item_not_answered">keine Antworteinträge vorhanden</string>
+    <string name="snack_bar_no_record_created_yet">Du hast noch keine Antworteinträge erstellt</string>
+    <string name="snack_bar_no_trackers_created_yet">Bitte erstelle zunächst eine Fragekarte</string>
+    <string name="home_dialog_snack_bar_invalid_input_no_answer_type_selected">Bitte wähle einen Antworttyp aus</string>
+    <string name="home_dialog_snack_bar_invalid_input_no_question_entered">Bitte gib eine Frage ein</string>
+    <string name="home_dialog_snack_bar_invalid_input_question_too_long">Bitte gib eine kürzere Frage ein</string>
+    <string name="snack_bar_confirm_msg_tracker_created">Neue Fragekarte erstellt</string>
+    <string name="snack_bar_confirm_msg_tracker_deleted">Fragekarte gelöscht</string>
+    <string name="snack_bar_confirm_msg_tracker_updated">Fragekarte aktualisiert</string>
+    <string name="interview_note_example">z.B. weil es geregnet hat</string>
+    <string name="dialog_title_edit_tracker">Fragekarte bearbeiten?</string>
+    <string name="dialog_confirm_edit_tracker">Bist du dir sicher, dass du diese Fragekarte bearbeiten möchtest?</string>
+    <string name="record_list_no_note">ohne Notitz</string>
+    <string name="dialog_title_clear_records">Alle Antworteinträge löschen?</string>
+    <string name="overflow_menu_clear_all_records">Antworteinträge löschen</string>
+    <string name="dialog_confirm_clear_records">Bist du dir sicher, dass du alle Antworteinträge löschen möchtest?</string>
+    <string name="record_list_snack_bar_record_deleted">Antworteintrag gelöscht</string>
+    <string name="snack_bar_undo">wiederherstellen</string>
+    <string name="add_edit_dialog_erase_btn_retrieve_answer_options">Antwortoptionen wiederherstellen</string>
+    <string name="add_edit_dialog_erase_btn_erase_records_and_save_tracker">Aktualisiere die Antworteinträge und speichere die Fragekarte</string>
+    <string name="add_edit_dialog_edit_answer_option_example">z.B. sehr gut</string>
+    <string name="home_dialog_question_headline">Was möchtest du dich fragen?</string>
+    <string name="home_dialog_question_example">z.B. wie war dein Tag?</string>
+    <string name="home_dialog_choose_answer_type_headline">Wie möchtest du auf die Frage antworten?</string>
+    <string name="home_dialog_radio_button_multiple_choice">Multiple Choice</string>
+    <string name="home_dialog_radio_button_numeric">Numerisch</string>
+    <string name="home_dialog_radio_button_time">Zeitangabe</string>
+    <string name="interview_dialog_enter_note_prompt">Hinterlasse eine Notitz</string>
+    <string name="interview_dialog_never_ask_again_in_this_session">In diesem Interview nicht mehr fragen</string>
+    <string name="interview_dialog_btn_skip">überspringen</string>
+    <string name="about_privacy_headline">Datenschutz</string>
+    <string name="about_privacy_text">
+        Anders als bei herkömmlichen Apps, werden bei dieser App alle Daten bewusst nur offline auf diesem Gerät gespeichert.
+        Es geht nicht darum, dass ein großer Konzern, sondern du selbst dich besser kennenlernst.
+    </string>
+    <string name="about_idea_headline">Idee der App</string>
+    <string name="about_idea_text">
+        Die Idee dieser App ist es, dich dabei zu unterstützen dich selber noch ein bisschen besser kennenzulernen.
+        Dafür kannst du dir eigene Fragen mit möglichen Antwortoptionen überlegen, die du dir dann jeden Tag (z.B. abends) stellen kannst.
+        Die Antworten werden gespeichert und können dann entweder in der App angesehen oder als CSV Datei exportiert werden, um sie z.B. mit Excel weiter auszuwerten.
+        Was du dann später mit den Auswertungen bzw. neuen Erkenntnissen über dich selbst anfangen möchtest, kannst du selber entscheiden.
+    </string>
+    <string name="backup_btn_backup">Backup</string>
+    <string name="backup_btn_restore">Restore</string>
+    <string name="add_edit_btn_add_answer">Antwortoption</string>
+    <string name="add_edit_answer_item_type_prompt">Bitte etwas eingeben</string>
+    <string name="add_edit_answer_list_header">Antwortoptionen:</string>
+    <string name="add_edit_question_over_line">Frage</string>
+    <string name="home_btn_start_interview">Interview starten</string>
+    <string name="record_list_item_no_record">noch nicht beantwortet</string>
+    <string name="fragment_title_home">Deine Fragen</string>
+    <string name="fragment_title_about">About</string>
+    <string name="fragment_title_backup">Backup</string>
+    <string name="overflow_menu_export_as_csv">Als CSV exportieren</string>
+    <string name="overflow_menu_add_example_trackers">Beispielfragekarten hinzufügen</string>
+    <string name="overflow_menu_add_example_records">Beispielantworteinträge erstellen</string>
+    <string name="overflow_menu_backup_data">Backup erstellen</string>
+    <string name="today">Heute</string>
+    <string name="yesterday">Gestern</string>
+    <string name="tomorrow">Morgen</string>
+    <string name="record_list_empty_record">kein Antworteintrag</string>
+    <string name="example_tracker_how_was_your_day">Wie war dein Tag?</string>
+    <string name="example_tracker_how_was_your_day_a_one">großartig</string>
+    <string name="example_tracker_how_was_your_day_a_two">gut</string>
+    <string name="example_tracker_how_was_your_day_a_three">nicht besonders</string>
+    <string name="example_tracker_how_was_your_day_a_four">nicht so gut</string>
+    <string name="example_tracker_how_was_your_day_a_five">fruchtbar</string>
+    <string name="example_tracker_did_you_help">Hast du heute jemandem geholfen?</string>
+    <string name="example_tracker_how_many_km">Wie viele km bist du heute gejoggt?</string>
+    <string name="example_tracker_how_long_run">Wie lange bist du heute gejoggt?</string>
+    <string name="example_tracker_how_long_gym">Wie lange warst du heute im Fitness Studio?</string>
+    <string name="example_tracker_how_many_km_cycle">Wie viele km bist du heute Fahrrad gefahren?</string>
+    <string name="example_tracker_eat">Was hast du heute gemacht?</string>
+    <string name="example_tracker_eat_a_one">Freunde getroffen</string>
+    <string name="example_tracker_eat_a_two">Sport gemacht</string>
+    <string name="example_tracker_eat_a_three">Gelernt</string>
+    <string name="example_tracker_eat_a_four">Gekocht</string>
+    <string name="example_tracker_weight">Wie viel wiegst du heute?</string>
+    <string name="example_tracker_kg">kg</string>
+    <string name="example_tracker_km">km</string>
+    <string name="example_tracker_how_long_sleep">Wie viele Stunden hast du gestern geschlafen?</string>
+    <string name="example_tracker_youtube">Wie viel Zeit hast du heute mit YouTube Videos gucken verbracht?</string>
+    <string name="fragment_title_settings">Einstellungen</string>
+    <string name="fragment_title_record_list">Antworteinträge</string>
+    <string name="add_edit_set_default_value_time_picker">Bestimme einen Anfangswert</string>
+    <string name="settings_switch_dark_mode_headline">Nachtmodus</string>
+    <string name="settings_switch_dark_mode_headline_body">Nachtmodus ein-/ausschalten</string>
+    <string name="snack_bar_function_not_implemented">Funktion noch nicht implementiert</string>
+    <string name="backup_restore_hint">WARNUNG: Das Wiederherstellen aus einem Backup löscht alle Daten und Einstellungen, die sich derzeit in der App befinden. Interview Diary wird nach Abschluss der Wiederherstellung neu gestartet.</string>
+    <string name="backup_backup_hint">Die Sicherung sichert alle Ihre Daten einschließlich aller Fragekarten, Antworteinträge und Notizen. Sie sollten Ihre Daten regelmäßig auf ein externes Gerät oder einen Cloud Speicher sichern, für den Fall, dass Ihr Gerät verloren geht oder kaputt geht.</string>
+    <string name="accessibility_app_logo">App Logo</string>
+    <string name="snack_bar_all_records_cleared">Alle Antworteinträge wurden gelöscht</string>
+    <string name="snack_bar_confirm_msg_all_trackers_cleared">Alle Fragekarten wurden gelöscht</string>
+    <string name="interview_btn_add_a_note">Füge eine Notitz hinzu</string>
+    <string name="dialog_confirm_delete_tracker">Bist du dir sicher, dass du diese Fragekarte löschen möchtest?</string>
+    <string name="home_btn_create_tracker">Neue Fragekarte \n erstellen</string>
+    <string name="overflow_menu_create_new_tracker">Neue Fragekarte erstellen</string>
+    <![CDATA[
+    />
+]]>
+</resources>

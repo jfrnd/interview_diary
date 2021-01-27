@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_home"
+        android:title="@string/fragment_title_home" />
+
+    <item
+        android:id="@+id/aboutFragment"
+        android:icon="@drawable/ic_info"
+        android:iconTint="@color/gray"
+        android:title="@string/fragment_title_about" />
+
+    <item
+        android:id="@+id/backupFragment"
+        android:icon="@drawable/ic_backup"
+        android:iconTint="@color/gray"
+        android:title="@string/fragment_title_backup" />
+
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_settings"
+        android:iconTint="@color/gray"
+        android:title="@string/fragment_title_settings"
+        />
+
+</menu>

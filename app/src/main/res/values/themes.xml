@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryDark">@color/primary_color_dark</item>
+        <item name="colorPrimaryVariant">@color/primary_color_light</item>
+        <item name="colorOnPrimary">@color/black</item>
+
+        <item name="colorSecondary">@color/secondary_color</item>
+        <item name="colorSecondaryVariant">@color/secondary_color_light</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+
+        <item name="actionBarTheme">@style/MyActionBar</item>
+    </style>
+
+    <style name="MyActionBar" parent="@style/ThemeOverlay.MaterialComponents.Light">
+    </style>
+
+</resources>
+

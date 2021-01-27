@@ -1,0 +1,171 @@
+<resources>
+    <string name="app_name">Interview Diary</string>
+
+    <string name="fragment_title_edit_tracker">Edit question card</string>
+    <string name="fragment_title_add_new_tracker">New question card</string>
+    <string name="fragment_title_home">Your questions</string>
+    <string name="fragment_title_about">About</string>
+    <string name="fragment_title_backup">Backup</string>
+    <string name="fragment_title_settings">Settings</string>
+    <string name="fragment_title_record_list">Answer items</string>
+
+    <string name="overflow_menu_create_new_tracker">Create new question card</string>
+    <string name="overflow_menu_clear_all_records">Clear answer items</string>
+    <string name="overflow_menu_clear_all_trackers">Clear all question cards</string>
+    <string name="overflow_menu_export_as_csv">Export data as csv</string>
+    <string name="overflow_menu_add_example_trackers">Create example question cards</string>
+    <string name="overflow_menu_add_example_records">Create example answer items</string>
+    <string name="overflow_menu_backup_data">Backup data</string>
+
+    <string name="dialog_title_clear_trackers">Clear all cards?</string>
+    <string name="dialog_confirm_clear_trackers">Are you sure you want to clear all question cards?</string>
+    <string name="dialog_title_edit_tracker">Edit question card?</string>
+    <string name="dialog_confirm_edit_tracker">Are you sure you want to edit this question card?</string>
+    <string name="dialog_title_delete_tracker">Delete question card?</string>
+    <string name="dialog_confirm_delete_tracker">Are you sure you want to delete this question card?</string>
+    <string name="dialog_title_clear_records">Clear all answer items?</string>
+    <string name="dialog_confirm_clear_records">Are you sure you want to delete all answer items?</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="tomorrow">Tomorrow</string>
+
+    <string name="accessibility_app_logo">App Logo</string>
+
+    <string name="snack_bar_function_not_implemented">Function not implemented yet</string>
+    <string name="snack_bar_undo">undo</string>
+
+    <string name="snack_bar_no_record_created_yet">You have not created any answer items yet</string>
+    <string name="snack_bar_no_trackers_created_yet">Please create a question card first</string>
+    <string name="snack_bar_all_records_cleared">All answer items have been deleted</string>
+
+
+    <string name="snack_bar_confirm_msg_all_trackers_cleared">All question cards have been deleted</string>
+    />
+    <string name="snack_bar_confirm_msg_tracker_created">New question card created</string>
+    <string name="snack_bar_confirm_msg_tracker_deleted">Question card deleted</string>
+    <string name="snack_bar_confirm_msg_tracker_updated">Question card updated</string>
+
+    <string name="home_btn_start_interview">Start interview</string>
+    <string name="home_btn_create_tracker">create new \n question card</string>
+    <string name="home_item_not_answered">no answer items</string>
+
+    <string name="home_dialog_snack_bar_invalid_input_no_answer_type_selected">Please select an answer type</string>
+    <string name="home_dialog_snack_bar_invalid_input_no_question_entered">Please enter a question</string>
+    <string name="home_dialog_snack_bar_invalid_input_question_too_long">Please enter a shorter question</string>
+
+    <string name="home_dialog_question_headline">What do you want to ask yourself?</string>
+    <string name="home_dialog_question_example">e.g. how was you day?</string>
+    <string name="home_dialog_choose_answer_type_headline">How do you want to answer this question?</string>
+    <string name="home_dialog_radio_button_multiple_choice">Multiple Choice</string>
+    <string name="home_dialog_radio_button_numeric">Numeric</string>
+    <string name="home_dialog_radio_button_time">Time</string>
+
+    <string name="interview_note_example">e.g. due to the rain</string>
+    <string name="interview_dialog_enter_note_prompt">Enter a note</string>
+    <string name="interview_dialog_never_ask_again_in_this_session">Never ask again in this interview session</string>
+    <string name="interview_dialog_btn_skip">skip</string>
+    <string name="interview_btn_add_a_note">Add a note</string>
+
+    <string name="add_edit_question_over_line">Question</string>
+
+    <string name="add_edit_switch_add_notes_headline">Add notes</string>
+    <string name="add_edit_switch_add_notes_body">Turn on/off add notes functionality for this question card</string>
+    <string name="add_edit_switch_multi_selection_headline">Multi selection</string>
+    <string name="add_edit_switch_multi_selection_body">Turn on/off multi selection for this question card</string>
+
+    <string name="add_edit_set_default_value_time_picker">Set a default value</string>
+
+    <string name="add_edit_default_value_headline">Default value</string>
+    <string name="add_edit_default_value_body">Set a default value</string>
+
+    <string name="add_edit_min_value_headline">Min value</string>
+    <string name="add_edit_min_value_body">Set a minimum value</string>
+
+    <string name="add_edit_max_value_headline">Max value</string>
+    <string name="add_edit_max_value_body">Set a maximum value</string>
+
+    <string name="add_edit_unit_headline">Unit (optional)</string>
+    <string name="add_edit_unit_body">Set a unit</string>
+    <string name="add_edit_unit_example">e.g. kg</string>
+
+    <string name="add_edit_answer_list_header">Answer options:</string>
+    <string name="add_edit_answer_item_type_prompt">Please enter text</string>
+    <string name="add_edit_btn_add_answer">Answer option</string>
+
+    <string name="add_edit_dialog_edit_question_headline">What do you want to ask yourself?</string>
+    <string name="add_edit_dialog_edit_def_val_headline">Please enter a default value</string>
+    <string name="add_edit_dialog_edit_min_val_headline">Please enter a minimum value</string>
+    <string name="add_edit_dialog_edit_max_val_headline">Please enter a maximum value</string>
+    <string name="add_edit_dialog_edit_answer_headline">Please enter an answer option</string>
+    <string name="add_edit_dialog_edit_unit_headline">Please enter a unit</string>
+    <string name="add_edit_dialog_edit_answer_option_example">e.g. very good</string>
+
+    <string name="add_edit_dialog_invalid_input_field_cannot_be_empty">This field cannot be empty</string>
+    <string name="add_edit_dialog_invalid_input_shorter_input">Your input must be shorter</string>
+    <string name="add_edit_dialog_invalid_input_invalid_character">The character \';\' is invalid</string>
+
+    <string name="add_edit_save_invalid_input_still_loading">Still loading data in background. Please click again.</string>
+    <string name="add_edit_save_invalid_input_unique_answer_options">Please choose only unique answer options</string>
+    <string name="add_edit_save_invalid_input_max_val_smaller_than_def_val">Max value cannot be smaller than default value</string>
+    <string name="add_edit_save_invalid_input_max_val_smaller_than_min_val">Max value cannot be smaller than min value</string>
+    <string name="add_edit_save_invalid_input_def_val_smaller_than_min_val">Default value cannot be smaller than min value</string>
+    <string name="add_edit_save_invalid_input_empty_fields">Answer options cannot be empty</string>
+    <string name="add_edit_save_invalid_input_create_more_answer_options">Please create at least two answer options</string>
+
+    <string name="add_edit_dialog_erase_question_first">You have deleted answer options, which belong to existing answer items:</string>
+    <string name="add_edit_dialog_erase_question_second">What do you want to do?</string>
+    <string name="add_edit_dialog_erase_question_record_counter">item(s)</string>
+    <string name="add_edit_dialog_erase_btn_retrieve_answer_options">Retrieve answer options</string>
+    <string name="add_edit_dialog_erase_btn_erase_records_and_save_tracker">Update answer items and save question card</string>
+
+    <string name="record_list_no_note">no note added</string>
+    <string name="record_list_item_no_record">not answered yet</string>
+    <string name="record_list_snack_bar_record_deleted">Answer item deleted</string>
+    <string name="record_list_empty_record">no answer item</string>
+
+    <string name="about_privacy_headline">Privacy</string>
+    <string name="about_privacy_text">
+    Unlike to other apps, this app does not store any data online. Everything is only stored on this device.
+    It is about that you are coming to know yourself better and not that some big corporation does that for you.
+    </string>
+    <string name="about_idea_headline">Idea</string>
+    <string name="about_idea_text">
+    The idea of this app is to help you to find out more about yourself.
+    In order to do that, you can create question cards with corresponding answer options and let the app ask you these questions on a regular basis (e.g. every day in the evening).
+    Your answers will be recorded and can be recalled at any time. For a more detailed evaluation (e.g. with Excel) you can export the answer items as a CSV file.
+    The results of your evaluation belong to you. You can decide how and if to make use of it.
+    </string>
+    <string name="settings_switch_dark_mode_headline">Dark mode</string>
+    <string name="settings_switch_dark_mode_headline_body">Turn on/off dark mode</string>
+
+    <string name="backup_backup_hint">Backup saves all of your app data including all question cards, answer items and notes. You should back up your data to an external device or cloud storage regularly in case your device gets lost or broken.</string>
+    <string name="backup_restore_hint">WARNING: Restoring from a backup will erase all data and setup currently in the app. Interview Diary will restart after the restore is complete.</string>
+    <string name="backup_btn_backup">Backup</string>
+    <string name="backup_btn_restore">Restore</string>
+
+    <string name="example_tracker_how_was_your_day">How was your day?</string>
+    <string name="example_tracker_how_was_your_day_a_one">awesome</string>
+    <string name="example_tracker_how_was_your_day_a_two">good</string>
+    <string name="example_tracker_how_was_your_day_a_three">nothing special</string>
+    <string name="example_tracker_how_was_your_day_a_four">not that good</string>
+    <string name="example_tracker_how_was_your_day_a_five">horrible</string>
+    <string name="example_tracker_did_you_help">Did you help someone today?</string>
+    <string name="example_tracker_how_many_km">How many km did you run today?</string>
+    <string name="example_tracker_how_long_run">How long did you run today?</string>
+    <string name="example_tracker_how_long_gym">For how long have you been at the gym today?</string>
+    <string name="example_tracker_how_many_km_cycle">How many km did you cycle today?</string>
+    <string name="example_tracker_eat">What did you do today?</string>
+    <string name="example_tracker_eat_a_one">Meeting friends</string>
+    <string name="example_tracker_eat_a_two">Sports</string>
+    <string name="example_tracker_eat_a_three">Studying</string>
+    <string name="example_tracker_eat_a_four">Cooking</string>
+    <string name="example_tracker_weight">How much do you weigh today?</string>
+    <string name="example_tracker_kg">kg</string>
+    <string name="example_tracker_km">km</string>
+    <string name="example_tracker_how_long_sleep">How many hours did you sleep last night?</string>
+    <string name="example_tracker_youtube">How many hours did you spend on Youtube today?</string>
+</resources>

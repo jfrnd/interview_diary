@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    android:label="Single Choice"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.android.interviewdiary.fragments.other.AboutFragment"
+        android:label="@string/fragment_title_about"
+        tools:layout="@layout/fragment_about" />
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.android.interviewdiary.fragments.home.HomeFragment"
+        android:label="@string/fragment_title_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_interview_nested_nav_graph"
+            app:destination="@id/interview_nested_nav_graph"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_homeFragment_to_recordListFragment"
+            app:destination="@id/recordListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addUpdateFragment"
+            app:destination="@id/addUpdateFragment" />
+    </fragment>
+
+    <navigation
+        android:id="@+id/interview_nested_nav_graph"
+        app:startDestination="@id/interviewFragment">
+        <argument
+            android:name="tracker_ids"
+            app:argType="integer[]" />
+        <argument
+            android:name="date"
+            app:argType="string" />
+        <fragment
+            android:id="@+id/interviewFragment"
+            android:name="com.example.android.interviewdiary.fragments.interview.InterviewNavigationFragment"
+            android:label="Interview"
+            tools:layout="@layout/fragment_interview_navigation">
+            <argument
+                android:name="tracker_ids"
+                app:argType="integer[]" />
+            <argument
+                android:name="date"
+                app:argType="string" />
+        </fragment>
+        <fragment
+            android:id="@+id/ivMultipleChoiceFragment"
+            android:name="com.example.android.interviewdiary.fragments.interview.InterviewMultipleChoiceFragment"
+            android:label="Interview"
+            tools:layout="@layout/fragment_interview_multiple_choice" />
+        <fragment
+            android:id="@+id/interviewSliderFragment"
+            android:name="com.example.android.interviewdiary.fragments.interview.InterviewNumericFragment"
+            android:label="Interview"
+            tools:layout="@layout/fragment_interview_numeric" />
+        <fragment
+            android:id="@+id/interviewDurationFragment"
+            android:name="com.example.android.interviewdiary.fragments.interview.InterviewTimeFragment"
+            android:label="Interview"
+            tools:layout="@layout/fragment_interview_time" />
+    </navigation>
+    <fragment
+        android:id="@+id/recordListFragment"
+        android:name="com.example.android.interviewdiary.fragments.recordList.RecordListFragment"
+        android:label="@string/fragment_title_record_list"
+        tools:layout="@layout/fragment_record_list">
+        <argument
+            android:name="tracker"
+            app:argType="com.example.android.interviewdiary.model.Tracker" />
+        <argument
+            android:name="date"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_recordListFragment_to_addUpdateFragment"
+            app:destination="@id/addUpdateFragment" />
+    </fragment>
+        <fragment
+            android:id="@+id/addUpdateFragment"
+            android:name="com.example.android.interviewdiary.fragments.addEdit.AddEditFragment"
+            android:label="{title}"
+            tools:layout="@layout/fragment_add_edit">
+            <argument
+                android:name="tracker"
+                android:defaultValue="@null"
+                app:argType="com.example.android.interviewdiary.model.Tracker"
+                app:nullable="true" />
+            <argument
+                android:name="question"
+                android:defaultValue="@null"
+                app:argType="string"
+                app:nullable="true" />
+            <argument
+                android:name="tracker_type"
+                android:defaultValue="@null"
+                app:argType="com.example.android.interviewdiary.model.TrackerType"
+                app:nullable="true" />
+            <argument
+                android:name="title"
+                app:argType="string" />
+        </fragment>
+    <action android:id="@+id/action_global_interview_nested_nav_graph" app:destination="@id/interview_nested_nav_graph" />
+    <action android:id="@+id/action_global_addUpdateFragment" app:destination="@id/addUpdateFragment" />
+    <fragment
+        android:id="@+id/backupFragment"
+        android:name="com.example.android.interviewdiary.fragments.other.BackupFragment"
+        android:label="@string/fragment_title_backup"
+        tools:layout="@layout/fragment_backup" />
+    <action android:id="@+id/action_global_backupFragment" app:destination="@id/backupFragment" /><action android:id="@+id/action_global_recordListFragment" app:destination="@id/recordListFragment"/>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.android.interviewdiary.fragments.other.SettingsFragment"
+        android:label="@string/fragment_title_settings"
+        tools:layout="@layout/fragment_settings" />
+
+
+</navigation>
