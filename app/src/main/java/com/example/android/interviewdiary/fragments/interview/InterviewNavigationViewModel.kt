@@ -16,20 +16,23 @@ import com.example.android.interviewdiary.other.Constants.DATE
 import com.example.android.interviewdiary.other.Constants.TRACKER
 import com.example.android.interviewdiary.other.Constants.TRACKER_IDS
 import com.example.android.interviewdiary.repositories.AppRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
+import javax.inject.Inject
 
 /**
  * Will be instantiated once in the beginning of an interview session.
  */
-class InterviewNavigationViewModel @ViewModelInject constructor(
+@HiltViewModel
+class InterviewNavigationViewModel @Inject constructor(
     private val repo: AppRepository,
     private val glide: RequestManager,
-    @Assisted private val state: SavedStateHandle
+    private val state: SavedStateHandle
 ) : ViewModel() {
 
     val date: LocalDate = state.get<String>(DATE)!!.toLocalDate()

@@ -25,10 +25,12 @@ import com.example.android.interviewdiary.other.Constants.TRACKER
 import com.example.android.interviewdiary.other.Constants.TRACKER_TYPE
 import com.example.android.interviewdiary.other.Constants.UNIT
 import com.example.android.interviewdiary.other.Constants.UNIT_MAX_LENGTH
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 enum class InvalidInputSnackBar {
     STILL_LOADING_DATA,
@@ -42,10 +44,10 @@ enum class InvalidInputSnackBar {
     DEF_VAL_SMALLER_THAN_MIN_VAL,
     EMPTY_FIELDS,
 }
-
-class AddEditViewModel @ViewModelInject constructor(
+@HiltViewModel
+class AddEditViewModel @Inject constructor(
     private val repo: AppRepository,
-    @Assisted private val state: SavedStateHandle
+    private val state: SavedStateHandle
 ) : ViewModel() {
 
     val title = state.get<String>(FRAGMENT_TITLE)

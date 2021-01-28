@@ -16,19 +16,21 @@ import com.example.android.interviewdiary.other.utils.ConverterUtil.toLocalDate
 import com.example.android.interviewdiary.other.utils.ExportCSVUtils
 import com.example.android.interviewdiary.repositories.AppRepository
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import javax.inject.Inject
 
 
 enum class MySnackBars {NO_RECORDS_CREATED_YET, RECORDS_CLEARED}
 
-
-class RecordListViewModel @ViewModelInject constructor(
+@HiltViewModel
+class RecordListViewModel @Inject constructor(
     private val repo: AppRepository,
-    @Assisted private val state: SavedStateHandle
+    private val state: SavedStateHandle
 ) : ViewModel() {
 
     val tracker = state.get<Tracker>(TRACKER)

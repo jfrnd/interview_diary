@@ -12,11 +12,12 @@ import com.example.android.interviewdiary.other.Constants.DATE
 import com.example.android.interviewdiary.other.Constants.TRACKER
 import com.example.android.interviewdiary.other.utils.ConverterUtil.toLocalDate
 import com.example.android.interviewdiary.repositories.AppRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import java.time.LocalDate
-
+import javax.inject.Inject
 
 
 enum class InputStatus { INPUT_OK_AND_OR_SYNC_TO_DATABASE_VALUES, INPUT_ASYNC_TO_DATABASE_VALUES, WAITING_FOR_INPUT }
@@ -24,9 +25,10 @@ enum class InputStatus { INPUT_OK_AND_OR_SYNC_TO_DATABASE_VALUES, INPUT_ASYNC_TO
 /**
  * Will be newly instantiated for each question in an interview session.
  */
-class InterviewChildViewModel @ViewModelInject constructor(
+@HiltViewModel
+class InterviewChildViewModel @Inject constructor(
     private val repo: AppRepository,
-    @Assisted private val state: SavedStateHandle
+    private val state: SavedStateHandle
 ) : ViewModel() {
 
     val date: LocalDate = state.get<String>(DATE)!!.toLocalDate()

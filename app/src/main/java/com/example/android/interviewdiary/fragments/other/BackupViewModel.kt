@@ -7,11 +7,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.example.android.interviewdiary.other.Constants.DATABASE_NAME
 import com.example.android.interviewdiary.repositories.DefaultAppRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class BackupViewModel @ViewModelInject constructor(
+@HiltViewModel
+class BackupViewModel @Inject constructor(
     private val repo: DefaultAppRepository,
 ) : ViewModel() {
 

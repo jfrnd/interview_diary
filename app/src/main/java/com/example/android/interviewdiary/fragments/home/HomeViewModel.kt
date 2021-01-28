@@ -14,11 +14,13 @@ import com.example.android.interviewdiary.other.Constants.QUESTION_MAX_LENGTH
 import com.example.android.interviewdiary.other.utils.ExportCSVUtils.exportRecordsToCSVFile
 import com.example.android.interviewdiary.other.utils.InitDatabaseUtils
 import com.example.android.interviewdiary.repositories.AppRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import javax.inject.Inject
 
 enum class InvalidInputSnackBar {
     PLEASE_ADD_A_TRACKER,
@@ -35,8 +37,8 @@ enum class ConfMsgSnackBar {
     ALL_TRACKERS_CLEARED
 }
 
-
-class HomeViewModel @ViewModelInject constructor(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val repo: AppRepository
 ) : ViewModel() {
 
