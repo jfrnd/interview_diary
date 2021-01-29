@@ -1,11 +1,13 @@
 package com.example.android.interviewdiary.fragments.home
 
 import android.content.Context
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.android.interviewdiary.ADD_TRACKER_RESULT_OK
 import com.example.android.interviewdiary.DELETE_TRACKER_RESULT_OK
 import com.example.android.interviewdiary.EDIT_TRACKER_RESULT_OK
+import com.example.android.interviewdiary.model.Record
 import com.example.android.interviewdiary.model.Tracker
 import com.example.android.interviewdiary.model.TrackerType
 import com.example.android.interviewdiary.other.Constants.BUFFER_FUTURE
@@ -21,6 +23,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
+import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities
 
 enum class InvalidInputSnackBar {
     PLEASE_ADD_A_TRACKER,
@@ -49,12 +52,14 @@ class HomeViewModel @Inject constructor(
     private val initDate = MutableStateFlow<LocalDate>(LocalDate.now())
     fun setInitDate(date: LocalDate) {
         initDate.value = date
+        currentDate.value = date
     }
 
     /**
      * the date, which should be displayed on the UI
      */
     private val currentDate = MutableStateFlow(initDate.value)
+
     fun setCurrentDate(position: Int) {
         currentDate.value = initDate.value.plusDays(position.toLong() - BUFFER_PAST)
     }
@@ -70,17 +75,42 @@ class HomeViewModel @Inject constructor(
         flowOf(result)
     }
 
-    val itemList = currentDate.flatMapLatest { date ->
-        combine(
-            repo.streamAllTrackers(),
-            repo.streamLatestRecords(date)
-        ) { trackers, records ->
-            trackers.map { tracker ->
-                HomeListAdapter.Item.Tracker(
-                    tracker,
-                    records.find { it.trackerId == tracker.trackerId })
+    private var currentTrackerIds = MutableStateFlow(intArrayOf())
+
+    init {
+        viewModelScope.launch {
+            currentTrackerIds.value = repo.getAllTrackerIds()
+        }
+    }
+
+    private fun streamTrackers() =
+        currentTrackerIds.flatMapLatest {
+            repo.streamTrackers(it)
+        }
+
+    private fun streamLatestRecords() =
+        combine(currentTrackerIds, currentDate) { trackerIds, currentDate ->
+            trackerIds to currentDate
+        }.flatMapLatest { (trackerIds, currentDate) ->
+            repo.streamPastRecords(trackerIds, currentDate).flatMapLatest {records ->
+                flowOf(records.groupBy { it?.trackerId }.map { (trackerId, record) -> trackerId to record.maxByOrNull { it!!.date }})
             }
         }
+
+    fun itemList() = combine(
+        streamTrackers(),
+        streamLatestRecords()
+    ) { trackers, latestRecords ->
+        trackers to latestRecords
+    }.flatMapLatest { (trackers, latestRecords) ->
+        flowOf(
+            trackers.map { tracker ->
+                HomeListAdapter.Item.Tracker(
+                    tracker!!,
+                    latestRecords.find {tracker.trackerId == it.first }?.second
+                )
+            }
+        )
     }
 
     private val eventChannel = Channel<Event>()
@@ -171,27 +201,29 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    private fun startInterView(trackers: List<Tracker>, date: LocalDate) = viewModelScope.launch {
-        eventChannel.send(
-            Event.NavigateToInterviewFragment(
-                trackers.map { it.trackerId }.toIntArray(),
-                date.toString()
+    private fun startInterView(trackers: List<Tracker>, date: LocalDate) =
+        viewModelScope.launch {
+            eventChannel.send(
+                Event.NavigateToInterviewFragment(
+                    trackers.map { it.trackerId }.toIntArray(),
+                    date.toString()
+                )
             )
-        )
-    }
+        }
 
     private fun openCreateTrackerDialog() = viewModelScope.launch {
         eventChannel.send(Event.OpenCreateTrackerDialog)
     }
 
-    private fun createTracker(question: String, trackerType: TrackerType) = viewModelScope.launch {
-        eventChannel.send(
-            Event.NavigateToAddTrackerFragment(
-                question = question,
-                trackerType = trackerType
+    private fun createTracker(question: String, trackerType: TrackerType) =
+        viewModelScope.launch {
+            eventChannel.send(
+                Event.NavigateToAddTrackerFragment(
+                    question = question,
+                    trackerType = trackerType
+                )
             )
-        )
-    }
+        }
 
     private fun editTracker(tracker: Tracker) = viewModelScope.launch {
         eventChannel.send(Event.NavigateToEditTrackerFragment(tracker = tracker))
@@ -213,9 +245,10 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    private fun showInvalidInputMessage(snackBar: InvalidInputSnackBar) = viewModelScope.launch {
-        eventChannel.send(Event.ShowInvalidInputMessage(snackBar))
-    }
+    private fun showInvalidInputMessage(snackBar: InvalidInputSnackBar) =
+        viewModelScope.launch {
+            eventChannel.send(Event.ShowInvalidInputMessage(snackBar))
+        }
 
     private fun showConfirmationMessage(snackBar: ConfMsgSnackBar) =
         viewModelScope.launch {
@@ -247,9 +280,10 @@ class HomeViewModel @Inject constructor(
                 Event.ShowInvalidInputMessage(InvalidInputSnackBar.PLEASE_ADD_A_TRACKER)
             )
         else
-            InitDatabaseUtils.createInitRecords(trackers, LocalDate.now().minusDays(1), 30).forEach { record ->
-                repo.insertRecord(record)
-            }
+            InitDatabaseUtils.createInitRecords(trackers, LocalDate.now().minusDays(1), 30)
+                .forEach { record ->
+                    repo.insertRecord(record)
+                }
     }
 
 

@@ -22,10 +22,11 @@ interface AppRepository {
 
     suspend fun getTracker(trackerId: Int): Tracker?
     suspend fun getAllTrackers(): List<Tracker>
+    suspend fun getAllTrackerIds(): IntArray
 
     fun streamTracker(trackerId: Int): Flow<Tracker?>
     fun streamAllTrackers(): Flow<List<Tracker>>
-
+    fun streamTrackers(trackerIds: IntArray): Flow<List<Tracker?>>
 
     suspend fun insertRecord(record: Record)
     suspend fun updateRecord(record: Record)
@@ -42,9 +43,8 @@ interface AppRepository {
 
     fun streamRecord(trackerId: Int?, date: LocalDate): Flow<Record?>
     fun streamAllRecords(trackerId: Int): Flow<List<Record>>
-    /**
-     * Streams a list of records containing only the latest record of each trackerID (in the database), based on the date which was passed as a parameter.
-     */
-    fun streamLatestRecords(date: LocalDate): Flow<List<Record>>
+
+    fun streamPastRecords(trackerIds: IntArray, date: LocalDate): Flow<List<Record?>>
+
 
 }

@@ -7,6 +7,7 @@ import com.example.android.interviewdiary.model.Record
 import com.example.android.interviewdiary.model.Tracker
 import com.example.android.interviewdiary.model.TrackerType
 import java.time.LocalDate
+import java.time.OffsetDateTime
 import kotlin.random.Random
 
 
@@ -69,6 +70,7 @@ object InitTestDatabaseUtils {
     fun createFakeRecords(
         trackers: List<Tracker>,
         startDate: LocalDate,
+//        startDate: OffsetDateTime,
         amountEach: Long
     ): List<Record> {
         var records = listOf<Record>()
@@ -82,6 +84,7 @@ object InitTestDatabaseUtils {
     private fun createListOfRandomRecords(
         tracker: Tracker,
         startDate: LocalDate = LocalDate.now(),
+//        startDate: OffsetDateTime = OffsetDateTime.now(),
         amount: Long = 1,
         notes: List<String> = listOf(""),
     ): List<Record> {
@@ -98,6 +101,7 @@ object InitTestDatabaseUtils {
     private fun createRandomRecord(
         tracker: Tracker,
         date: LocalDate = LocalDate.now(),
+//        date: OffsetDateTime = OffsetDateTime.now(),
         note: String = "",
     ): Record {
         return when {

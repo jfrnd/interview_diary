@@ -232,7 +232,7 @@ class HomeFragment @Inject constructor(
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            homeViewModel.itemList.collect {
+            homeViewModel.itemList().collect {
                 homeListAdapter.createAndSubmitList(it)
             }
         }

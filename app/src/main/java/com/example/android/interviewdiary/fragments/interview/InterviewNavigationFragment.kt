@@ -30,7 +30,6 @@ class InterviewNavigationFragment : Fragment(R.layout.fragment_interview_navigat
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.i("ViewModelFragment", "InterviewFragment onViewCreated!")
 
         binding = FragmentInterviewNavigationBinding.bind(view)
 

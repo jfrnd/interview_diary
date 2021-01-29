@@ -59,12 +59,20 @@ class DefaultAppRepository @Inject constructor(
         return dao.getAllTrackers()
     }
 
+    override suspend fun getAllTrackerIds(): IntArray {
+        return dao.getAllTrackerIds()
+    }
+
     override fun streamTracker(trackerId: Int): Flow<Tracker?> {
         return dao.streamTracker(trackerId)
     }
 
     override fun streamAllTrackers(): Flow<List<Tracker>> {
         return dao.streamAllTrackers()
+    }
+
+    override fun streamTrackers(trackerIds: IntArray): Flow<List<Tracker?>> {
+        return dao.streamTrackers(trackerIds)
     }
 
     override suspend fun insertRecord(record: Record) {
@@ -126,12 +134,9 @@ class DefaultAppRepository @Inject constructor(
     override fun streamAllRecords(trackerId: Int): Flow<List<Record>> {
         return dao.streamAllRecords(trackerId)
     }
-    /**
-     * Streams a list of records containing only the latest record of each trackerID (in the database), based on the date which was passed as a parameter.
-     */
-    override fun streamLatestRecords(date: LocalDate): Flow<List<Record>> {
-        return dao.streamLatestRecords(date)
-    }
 
+    override fun streamPastRecords(trackerIds: IntArray, date: LocalDate): Flow<List<Record?>> {
+        return dao.streamPastRecords(trackerIds, date)
+    }
 
 }

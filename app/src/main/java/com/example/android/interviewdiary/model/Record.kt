@@ -7,8 +7,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 import java.time.LocalDate
-
-
+import java.time.OffsetDateTime
 
 
 /**
@@ -33,6 +32,7 @@ data class Record(
     @ColumnInfo(name = "tracker_id", index = true)
     val trackerId: Int,
     val date: LocalDate = LocalDate.now(),
+//    val date: OffsetDateTime?,
     /**
      * Contains the UI user selection for the question at this date.
      *

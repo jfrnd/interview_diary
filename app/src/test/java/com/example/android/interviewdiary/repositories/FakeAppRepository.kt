@@ -23,7 +23,6 @@ class FakeAppRepository : AppRepository {
     }
 
 
-
     override suspend fun insertTracker(tracker: Tracker) {
         fakeTrackers.add(tracker)
         updateFakeTrackersStream(fakeTrackers)
@@ -61,6 +60,10 @@ class FakeAppRepository : AppRepository {
         return fakeTrackers
     }
 
+    override suspend fun getAllTrackerIds(): IntArray {
+        return fakeTrackers.map { it.trackerId }.toIntArray()
+    }
+
     override fun streamTracker(trackerId: Int): Flow<Tracker?> {
         return fakeTrackersStream.flatMapLatest { trackers ->
             flowOf(trackers.find { it.trackerId == trackerId })
@@ -71,6 +74,11 @@ class FakeAppRepository : AppRepository {
         return fakeTrackersStream
     }
 
+    override fun streamTrackers(trackerIds: IntArray): Flow<List<Tracker?>> {
+        return fakeTrackersStream.flatMapLatest { trackers ->
+            flowOf(trackers.filter { trackerIds.contains(it.trackerId) })
+        }
+    }
 
     override suspend fun insertRecord(record: Record) {
         fakeRecords.add(record)
@@ -136,8 +144,13 @@ class FakeAppRepository : AppRepository {
         }
     }
 
-    override fun streamLatestRecords(date: LocalDate): Flow<List<Record>> {
-        TODO("Not yet implemented")
+    override fun streamPastRecords(
+        trackerIds: IntArray,
+        date: LocalDate
+    ): Flow<List<Record?>> {
+        return fakeRecordsStream.flatMapLatest {records->
+            flowOf(records.filter { it.date.isBefore(date.plusDays(1)) })
+        }
     }
 
     override fun checkpoint(supportSQLiteQuery: SupportSQLiteQuery?): Int {

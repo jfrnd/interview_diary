@@ -2,11 +2,23 @@ package com.example.android.interviewdiary.model
 
 import androidx.room.TypeConverter
 import java.time.LocalDate
+import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
 
 class Converters {
     private val databaseFormatter: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE
+    private val databaseFormatter_two: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+
+    @TypeConverter
+    fun stringToOffsetDateTime(input: String): OffsetDateTime =
+        databaseFormatter_two.parse(input, OffsetDateTime::from)
+
+    @TypeConverter
+    fun offsetDateTimeToString(input: OffsetDateTime): String =
+        input.toString()
+
+
 
     @TypeConverter
     fun stringToMap(input: String): Map<Int, String> {
@@ -26,7 +38,7 @@ class Converters {
 
     @TypeConverter
     fun localDateToString(input: LocalDate): String =
-        input.toString()
+        input.format(databaseFormatter)
 
     @TypeConverter
     fun intToTrackerType(i: Int): TrackerType =
