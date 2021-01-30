@@ -98,7 +98,7 @@ class AddEditViewModel @Inject constructor(
         state.get<List<Int>>(CONFIG_VALUES) ?: tracker?.configValues
         ?: when (trackerType) {
             TrackerType.MULTIPLE_CHOICE -> listOf(1)
-            TrackerType.NUMERIC -> listOf(60, 65, 70)
+            TrackerType.NUMERIC -> listOf(65, 60, 70)
             TrackerType.TIME -> listOf(0, 0, 0)
         }
     )
