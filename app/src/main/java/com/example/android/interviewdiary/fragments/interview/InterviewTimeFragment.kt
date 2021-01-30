@@ -72,7 +72,7 @@ class InterviewTimeFragment @Inject constructor(
         binding.body.apply {
             npHh.apply {
                 setOnValueChangedListener { picker, _, _ ->
-                    childViewModel.onNumericTimeValueChanged(0, picker.value)
+                    childViewModel.onNumericTimeValueChanged(0, picker.value.toFloat())
                 }
                 setFormatter { value ->
                     value.toString().padStart(2, '0')
@@ -80,7 +80,7 @@ class InterviewTimeFragment @Inject constructor(
             }
             npMm.apply {
                 setOnValueChangedListener { picker, _, _ ->
-                    childViewModel.onNumericTimeValueChanged(1, picker.value)
+                    childViewModel.onNumericTimeValueChanged(1, picker.value.toFloat())
                 }
                 setFormatter { value ->
                     value.toString().padStart(2, '0')
@@ -88,7 +88,7 @@ class InterviewTimeFragment @Inject constructor(
             }
             npSs.apply {
                 setOnValueChangedListener { picker, _, _ ->
-                    childViewModel.onNumericTimeValueChanged(2, picker.value)
+                    childViewModel.onNumericTimeValueChanged(2, picker.value.toFloat())
                 }
                 setFormatter { value ->
                     value.toString().padStart(2, '0')
@@ -103,13 +103,13 @@ class InterviewTimeFragment @Inject constructor(
                 binding.body.apply {
                     if (curValues.isNotEmpty()) {
                         curValues[0].let {
-                            npHh.value = it
+                            npHh.value = it.toInt()
                         }
                         curValues[1].let {
-                            npMm.value = it
+                            npMm.value = it.toInt()
                         }
                         curValues[2].let {
-                            npSs.value = it
+                            npSs.value = it.toInt()
                         }
                     }
                 }

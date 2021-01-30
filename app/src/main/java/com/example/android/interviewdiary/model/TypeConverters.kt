@@ -61,5 +61,17 @@ class Converters {
         return input.split(";").map { it.toInt() }
     }
 
+    @TypeConverter
+    fun floatListToString(input: List<Float?>): String {
+        if (input.contains(null)) return ""
+        return input.joinToString(";")
+    }
+
+    @TypeConverter
+    fun stringToFloatList(input: String): List<Float?> {
+        if (input == "") return arrayListOf()
+        return input.split(";").map { it.toFloat() }
+    }
+
 
 }

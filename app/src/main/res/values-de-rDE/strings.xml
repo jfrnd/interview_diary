@@ -106,7 +106,7 @@
     <string name="example_tracker_how_was_your_day_a_two">gut</string>
     <string name="example_tracker_how_was_your_day_a_three">nicht besonders</string>
     <string name="example_tracker_how_was_your_day_a_four">nicht so gut</string>
-    <string name="example_tracker_how_was_your_day_a_five">fruchtbar</string>
+    <string name="example_tracker_how_was_your_day_a_five">furchtbar</string>
     <string name="example_tracker_did_you_help">Hast du heute jemandem geholfen?</string>
     <string name="example_tracker_how_many_km">Wie viele km bist du heute gejoggt?</string>
     <string name="example_tracker_how_long_run">Wie lange bist du heute gejoggt?</string>
@@ -137,6 +137,9 @@
     <string name="dialog_confirm_delete_tracker">Bist du dir sicher, dass du diese Fragekarte löschen möchtest?</string>
     <string name="home_btn_create_tracker">Neue Fragekarte \n erstellen</string>
     <string name="overflow_menu_create_new_tracker">Neue Fragekarte erstellen</string>
+    <string name="home_dialog_radio_button_yes_no">Entscheidungsfrage</string>
+    <string name="add_edit_switch_decimal_headline">Dezimalzahlen erlauben</string>
+    <string name="add_edit_switch_decimal_body">Dezimalzahlen für diese Fragekarte ein-/auschalten</string>
     <![CDATA[
     />
 ]]>

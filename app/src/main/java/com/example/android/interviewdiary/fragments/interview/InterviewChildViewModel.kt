@@ -52,7 +52,7 @@ class InterviewChildViewModel @Inject constructor(
     /**
      * values which are currently selected by the user, but have not been saved to the database yet
      */
-    private val currentValues = MutableStateFlow<List<Int>>(state.get(CURRENT_VALUES) ?: listOf())
+    private val currentValues = MutableStateFlow<List<Float>>(state.get(CURRENT_VALUES) ?: listOf())
     fun streamCurrentValues() = currentValues.asStateFlow()
 
     init {
@@ -92,8 +92,8 @@ class InterviewChildViewModel @Inject constructor(
                 ) + tracker.configValues.map { answerId ->
                     InterviewMultipleChoiceAdapter.Item.Answer(
                         multiSelectionEnabled = tracker.enabledFeatures.contains(Feature.MULTI_SELECTION),
-                        answerId = answerId,
-                        text = tracker.answerOptions[answerId]
+                        answerId = answerId.toInt(),
+                        text = tracker.answerOptions[answerId.toInt()]
                             ?: error("answer option with no text"),
                         isSelectedInDb = dbRecord?.values?.contains(answerId) ?: false,
                         isSelectedAsCurVal = curValues.contains(answerId)
@@ -123,14 +123,17 @@ class InterviewChildViewModel @Inject constructor(
         saveRecord()
     }
 
-    fun onAnswerClick(answerId: Int, forceNoteInputInCurrentSession: Boolean) {
+    fun onAnswerClick(answerId: Float, forceNoteInputInCurrentSession: Boolean) {
         updateMultipleChoiceSelection(answerId)
         if (!tracker.enabledFeatures.contains(Feature.MULTI_SELECTION))
             onConfirmClick(forceNoteInputInCurrentSession)
     }
 
-    fun onNumericTimeValueChanged(index: Int, newValue: Int) {
-        updateNumericTimeValue(index, newValue)
+    fun onNumericTimeValueChanged(index: Int, newValue: Float) {
+        val value = if (tracker.enabledFeatures.contains(Feature.DECIMAL))
+            newValue
+        else newValue.toInt().toFloat()
+        updateNumericTimeValue(index, value)
     }
 
     fun onCancelClick() {
@@ -160,20 +163,26 @@ class InterviewChildViewModel @Inject constructor(
         }
     }
 
-    private fun updateMultipleChoiceSelection(clickedAnswerId: Int) {
+    private fun updateMultipleChoiceSelection(clickedAnswerId: Float) {
         currentValues.value = when {
-            currentValues.value.contains(clickedAnswerId) && tracker.enabledFeatures.contains(Feature.MULTI_SELECTION) ->
+            currentValues.value.contains(clickedAnswerId) && tracker.enabledFeatures.contains(
+                Feature.MULTI_SELECTION
+            ) ->
                 currentValues.value.filter { it != clickedAnswerId }
-            !currentValues.value.contains(clickedAnswerId) && tracker.enabledFeatures.contains(Feature.MULTI_SELECTION) ->
+            !currentValues.value.contains(clickedAnswerId) && tracker.enabledFeatures.contains(
+                Feature.MULTI_SELECTION
+            ) ->
                 currentValues.value.plus(clickedAnswerId)
-            currentValues.value.contains(clickedAnswerId) && !tracker.enabledFeatures.contains(Feature.MULTI_SELECTION) ->
+            currentValues.value.contains(clickedAnswerId) && !tracker.enabledFeatures.contains(
+                Feature.MULTI_SELECTION
+            ) ->
                 currentValues.value
             else -> arrayListOf(clickedAnswerId)
         }
         state.set(CURRENT_VALUES, currentValues.value)
     }
 
-    private fun updateNumericTimeValue(index: Int, newValue: Int) {
+    private fun updateNumericTimeValue(index: Int, newValue: Float) {
         currentValues.value = ArrayList(currentValues.value.mapIndexed { idx, value ->
             if (idx == index) newValue else value
         })
@@ -251,8 +260,8 @@ class InterviewChildViewModel @Inject constructor(
     }
 
     private fun updateYesNoSelection(yes: Boolean) {
-        if (yes) currentValues.value = listOf(1)
-        else currentValues.value = listOf(0)
+        if (yes) currentValues.value = listOf(1f)
+        else currentValues.value = listOf(0f)
         state.set(CURRENT_VALUES, currentValues.value)
     }
 

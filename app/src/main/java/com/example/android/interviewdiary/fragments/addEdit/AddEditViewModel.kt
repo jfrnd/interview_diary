@@ -1,7 +1,5 @@
 package com.example.android.interviewdiary.fragments.addEdit
 
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.android.interviewdiary.ADD_TRACKER_RESULT_OK
 import com.example.android.interviewdiary.DELETE_TRACKER_RESULT_OK
@@ -11,11 +9,9 @@ import com.example.android.interviewdiary.repositories.AppRepository
 import com.example.android.interviewdiary.other.Constants.ANSWER_OPTIONS
 import com.example.android.interviewdiary.other.Constants.ANSWER_OPTION_MAX_LENGTH
 import com.example.android.interviewdiary.other.Constants.ANSWER_OPTION
-import com.example.android.interviewdiary.other.Constants.NOTES_ENABLED
 import com.example.android.interviewdiary.other.Constants.CONFIG_VALUES
 import com.example.android.interviewdiary.other.Constants.DEFAULT_VALUE
 import com.example.android.interviewdiary.other.Constants.ENABLED_FEATURES
-import com.example.android.interviewdiary.other.Constants.MULTI_SELECTION_ENABLED
 import com.example.android.interviewdiary.other.Constants.IMAGE_URI_STRING
 import com.example.android.interviewdiary.other.Constants.MAX_VALUE
 import com.example.android.interviewdiary.other.Constants.MIN_VALUE
@@ -79,11 +75,6 @@ class AddEditViewModel @Inject constructor(
         state.set(QUESTION, question.value)
     }
 
-//    private var notesEnabled =
-//        state.get<Boolean>(NOTES_ENABLED) ?: tracker?.notesEnabled ?: true
-//    private var multiSelectionEnabled =
-//        state.get<Boolean>(MULTI_SELECTION_ENABLED) ?: tracker?.multiSelectionEnabled ?: false
-
     private var enabledFeatures =
         state.get<List<Feature>>(ENABLED_FEATURES) ?: tracker?.enabledFeatures
         ?: listOf(Feature.NOTES)
@@ -92,48 +83,50 @@ class AddEditViewModel @Inject constructor(
     fun updateSwitchValue(switchType: Int, isChecked: Boolean) {
         when (switchType) {
             SWITCH_TYPE_NOTE_INPUT -> {
-                enabledFeatures = if (isChecked && !enabledFeatures.contains(Feature.NOTES))
-                    enabledFeatures.plus(Feature.NOTES)
-                else
-                    enabledFeatures.minus(Feature.NOTES)
+                enabledFeatures =
+                    if (isChecked)
+                        enabledFeatures.plus(Feature.NOTES).distinct()
+                    else
+                        enabledFeatures.minus(Feature.NOTES).distinct()
                 state.set(ENABLED_FEATURES, enabledFeatures)
             }
             SWITCH_TYPE_MULTI_SELECTION -> {
                 enabledFeatures =
-                    if (isChecked && !enabledFeatures.contains(Feature.MULTI_SELECTION))
-                        enabledFeatures.plus(Feature.MULTI_SELECTION)
+                    if (isChecked)
+                        enabledFeatures.plus(Feature.MULTI_SELECTION).distinct()
                     else
-                        enabledFeatures.minus(Feature.MULTI_SELECTION)
+                        enabledFeatures.minus(Feature.MULTI_SELECTION).distinct()
                 state.set(ENABLED_FEATURES, enabledFeatures)
             }
             SWITCH_TYPE_DECIMAL -> {
-                enabledFeatures = if (isChecked && !enabledFeatures.contains(Feature.DECIMAL))
-                    enabledFeatures.plus(Feature.DECIMAL)
-                else
-                    enabledFeatures.minus(Feature.DECIMAL)
+                enabledFeatures =
+                    if (isChecked)
+                        enabledFeatures.plus(Feature.DECIMAL).distinct()
+                    else
+                        enabledFeatures.minus(Feature.DECIMAL).distinct()
                 state.set(ENABLED_FEATURES, enabledFeatures)
             }
         }
     }
 
     private var configValues = MutableStateFlow(
-        state.get<List<Int>>(CONFIG_VALUES) ?: tracker?.configValues
+        state.get<List<Float>>(CONFIG_VALUES) ?: tracker?.configValues
         ?: when (trackerType) {
-            TrackerType.MULTIPLE_CHOICE -> listOf(1)
-            TrackerType.NUMERIC -> listOf(65, 60, 70)
-            TrackerType.TIME -> listOf(0, 0, 0)
-            TrackerType.YES_NO -> listOf(0, 1)
+            TrackerType.MULTIPLE_CHOICE -> listOf(1f)
+            TrackerType.NUMERIC -> listOf(65f, 60f, 70f)
+            TrackerType.TIME -> listOf(0f, 0f, 0f)
+            TrackerType.YES_NO -> listOf(0f, 1f)
         }
     )
 
-    private fun updateConfigValues(index: Int, newAnswerId: Int) {
+    private fun updateConfigValues(index: Int, newAnswerId: Float) {
         configValues.value = configValues.value.mapIndexed { idx, oldVal ->
             if (idx == index) newAnswerId else oldVal
         }
         state.set(CONFIG_VALUES, configValues.value)
     }
 
-    private fun updateConfigValues(newList: List<Int>) {
+    private fun updateConfigValues(newList: List<Float>) {
         configValues.value = newList
         state.set(CONFIG_VALUES, configValues.value)
     }
@@ -149,17 +142,17 @@ class AddEditViewModel @Inject constructor(
         state.get<Map<Int, String>>(ANSWER_OPTIONS) ?: tracker?.answerOptions ?: mapOf(1 to "")
     )
 
-    private fun updateAnswerOption(answerId: Int, value: String?) {
+    private fun updateAnswerOption(answerId: Float, value: String?) {
         if (value == null)
-            answerOptions.value = answerOptions.value.minus(answerId)
+            answerOptions.value = answerOptions.value.minus(answerId.toInt())
         else
-            answerOptions.value = answerOptions.value.plus(answerId to value.capitalize())
+            answerOptions.value = answerOptions.value.plus(answerId.toInt() to value.capitalize())
         state.set(ANSWER_OPTIONS, answerOptions.value)
     }
 
     private var allRecords: List<Record>? = null
-    private var _allRecordValues: List<Int>? = null
-    val allRecordValues: List<Int>?
+    private var _allRecordValues: List<Float>? = null
+    val allRecordValues: List<Float>?
         get() = _allRecordValues
 
 
@@ -180,7 +173,7 @@ class AddEditViewModel @Inject constructor(
         data class OpenEditTextDialog(val itemViewType: Int, val index: Int, val answerId: Int) :
             Event()
 
-        data class OpenEraseRecordEntriesDialog(val answerIds: List<Int>) : Event()
+        data class OpenEraseRecordEntriesDialog(val answerIds: List<Float>) : Event()
         data class ShowInvalidInputMessage(val snackBar: InvalidInputSnackBar) : Event()
         data class NavigateBackWithResult(val result: Int) : Event()
     }
@@ -221,9 +214,9 @@ class AddEditViewModel @Inject constructor(
         return flowOf(
             listOf(
                 AddEditAdapter.Item.TimePicker(
-                    hh = configValues.value[0],
-                    mm = configValues.value[1],
-                    ss = configValues.value[2]
+                    hh = configValues.value[0].toInt(),
+                    mm = configValues.value[1].toInt(),
+                    ss = configValues.value[2].toInt()
                 )
             )
         )
@@ -240,9 +233,9 @@ class AddEditViewModel @Inject constructor(
                         enabledFeatures.contains(Feature.DECIMAL),
                         SWITCH_TYPE_DECIMAL
                     ),
-                    AddEditAdapter.Item.Numeric(0, configValues[0].toString()),
-                    AddEditAdapter.Item.Numeric(1, configValues[1].toString()),
-                    AddEditAdapter.Item.Numeric(2, configValues[2].toString()),
+                    AddEditAdapter.Item.Numeric(0, configValues[0].toInt().toString()),
+                    AddEditAdapter.Item.Numeric(1, configValues[1].toInt().toString()),
+                    AddEditAdapter.Item.Numeric(2, configValues[2].toInt().toString()),
                     AddEditAdapter.Item.Unit(unit)
                 )
             )
@@ -265,10 +258,10 @@ class AddEditViewModel @Inject constructor(
                     ), AddEditAdapter.Item.AnswerOptionHeader
                 ) + configValues.mapIndexed { index, answerId ->
                     AddEditAdapter.Item.AnswerOption(
-                        answerId = answerId,
-                        text = (answerOptions)[answerId] ?: "",
+                        answerId = answerId.toInt(),
+                        text = (answerOptions)[answerId.toInt()] ?: "",
                         position = index + 1,
-                        hasDuplicate = answerId.hasDuplicate(answerOptions)
+                        hasDuplicate = answerId.toInt().hasDuplicate(answerOptions)
                     )
                 } + listOf(AddEditAdapter.Item.AddButton)
             )
@@ -276,15 +269,15 @@ class AddEditViewModel @Inject constructor(
     }
 
 
-    private fun List<Int>?.dataNotFetchedYet(): Boolean = this == null
+    private fun List<Float>?.dataNotFetchedYet(): Boolean = this == null
 
-    private fun List<Int>.containDeletedAnswerOptions(): Boolean {
+    private fun List<Float>.containDeletedAnswerOptions(): Boolean {
         val deletedAnswerOptions =
             tracker!!.answerOptions.keys.filter { !answerOptions.value.keys.contains(it) }
         return this.any { deletedAnswerOptions.contains(it) }
     }
 
-    private fun List<Int>.filterDeletedAnswerOptions(): List<Int> {
+    private fun List<Float>.filterDeletedAnswerOptions(): List<Float> {
         val deletedAnswerOptions =
             tracker!!.answerOptions.keys.filter { !answerOptions.value.keys.contains(it) }
         return this.filter { deletedAnswerOptions.contains(it) }.distinct()
@@ -335,7 +328,7 @@ class AddEditViewModel @Inject constructor(
         addNewAnswerOption()
     }
 
-    fun onTimePickerValueChange(idx: Int, value: Int) = updateConfigValues(idx, value)
+    fun onTimePickerValueChange(idx: Int, value: Int) = updateConfigValues(idx, value.toFloat())
 
     fun onItemMoveStart() = initTempConfigValues(configValues.value)
 
@@ -348,7 +341,7 @@ class AddEditViewModel @Inject constructor(
 
     fun onItemMoveFinish() = updateConfigValues(tempConfigValues)
 
-    fun onAnswerRemoveClick(answerId: Int) = removeAnswerOption(answerId)
+    fun onAnswerRemoveClick(answerId: Float) = removeAnswerOption(answerId)
 
     fun onRetrieveAnswerOptionsClick(deletedAnswerIds: IntArray) =
         retrieveAnswerOptions(deletedAnswerIds)
@@ -373,7 +366,7 @@ class AddEditViewModel @Inject constructor(
                 } else false
             VIEW_TYPE_ADD_EDIT_ANSWER_OPTION ->
                 if (validateTextInput(input, ANSWER_OPTION_MAX_LENGTH)) {
-                    updateAnswerOption(answerId, input)
+                    updateAnswerOption(answerId.toFloat(), input)
                     true
                 } else false
             VIEW_TYPE_ADD_EDIT_UNIT ->
@@ -383,7 +376,7 @@ class AddEditViewModel @Inject constructor(
                 } else false
             VIEW_TYPE_ADD_EDIT_NUMERIC ->
                 if (validateTextInput(input, NUMERIC_VALUE_MAX_LENGTH)) {
-                    updateConfigValues(index, input.toInt())
+                    updateConfigValues(index, input.toFloat())
                     true
                 } else false
             else -> throw ClassCastException("Unknown ViewType $itemViewType")
@@ -486,7 +479,7 @@ class AddEditViewModel @Inject constructor(
         updateAnswerOption(newId, "")
     }
 
-    private fun removeAnswerOption(answerId: Int) {
+    private fun removeAnswerOption(answerId: Float) {
         updateAnswerOption(answerId, null)
         updateConfigValues(configValues.value.minus(answerId))
     }
@@ -494,12 +487,12 @@ class AddEditViewModel @Inject constructor(
     private suspend fun eraseRecordEntries(answerIdsToBeErased: IntArray) {
         allRecords!!.filter { record ->
             record.values.any { answerId ->
-                answerIdsToBeErased.contains(answerId)
+                answerIdsToBeErased.contains(answerId.toInt())
             }
         }
             .forEach { record ->
                 val updatedRecord = record.copy(
-                    values = record.values.filter { !answerIdsToBeErased.contains(it) }
+                    values = record.values.filter { !answerIdsToBeErased.contains(it.toInt()) }
                 )
                 if (updatedRecord.values.isEmpty())
                     repo.deleteRecord(updatedRecord)
@@ -510,13 +503,13 @@ class AddEditViewModel @Inject constructor(
 
     private fun retrieveAnswerOptions(delAnswerIds: IntArray) {
         delAnswerIds.forEach { answerId ->
-            updateAnswerOption(answerId, tracker!!.answerOptions[answerId])
-            updateConfigValues(configValues.value + listOf(answerId))
+            updateAnswerOption(answerId.toFloat(), tracker!!.answerOptions[answerId])
+            updateConfigValues(configValues.value + listOf(answerId.toFloat()))
         }
     }
 
-    private var tempConfigValues: List<Int> = emptyList()
-    private fun initTempConfigValues(configValues: List<Int>) {
+    private var tempConfigValues: List<Float> = emptyList()
+    private fun initTempConfigValues(configValues: List<Float>) {
         tempConfigValues = configValues
     }
 
@@ -535,7 +528,7 @@ class AddEditViewModel @Inject constructor(
     }
 
     private fun validateDataMultipleChoice(
-        configValues: List<Int>,
+        configValues: List<Float>,
         answerOptions: Map<Int, String>
     ): Boolean {
         return when {
@@ -555,7 +548,7 @@ class AddEditViewModel @Inject constructor(
         }
     }
 
-    private fun validateDataNumeric(configValues: List<Int>): Boolean {
+    private fun validateDataNumeric(configValues: List<Float>): Boolean {
         val defaultValue = configValues[0]
         val minValue = configValues[1]
         val maxValue = configValues[2]
@@ -587,20 +580,20 @@ class AddEditViewModel @Inject constructor(
     }
 
     private fun getNewAnswerId(
-        originalIds: List<Int>?,
-        currentIds: List<Int>
-    ): Int {
-        val originalIds = originalIds ?: listOf()
-        val blockedIds = (currentIds + originalIds + listOf(0)).distinct()
-        return blockedIds.first { !blockedIds.contains(it + 1) } + 1
+        inputOriginalIds: List<Float>?,
+        currentIds: List<Float>
+    ): Float {
+        val originalIds = inputOriginalIds ?: emptyList()
+        val blockedIds = (currentIds + originalIds + listOf(0f)).distinct()
+        return blockedIds.first { !blockedIds.contains(it + 1f) } + 1f
     }
 
     private fun Int.hasDuplicate(answerOptions: Map<Int, String>) =
         answerOptions.count { it.value.isNotBlank() && it.value == answerOptions[this] } > 1
 
 
-    private fun List<Int>.swap(index1: Int, index2: Int)
-            : List<Int> {
+    private fun List<Float>.swap(index1: Int, index2: Int)
+            : List<Float> {
         val result = this.toMutableList()
         val val1 = this[index1]
         val val2 = this[index2]

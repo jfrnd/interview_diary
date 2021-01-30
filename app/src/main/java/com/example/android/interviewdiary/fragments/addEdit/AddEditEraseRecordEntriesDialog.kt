@@ -35,7 +35,7 @@ class AddEditEraseRecordEntriesDialog :
             questionPartTwo +=
                 "${viewModel.tracker!!.answerOptions[answerId]}".plus(
                     " - ".plus(
-                        "${viewModel.allRecordValues!!.count { it == answerId }} ${resources.getString(R.string.add_edit_dialog_erase_question_record_counter)}\n"
+                        "${viewModel.allRecordValues!!.count { it == answerId.toFloat() }} ${resources.getString(R.string.add_edit_dialog_erase_question_record_counter)}\n"
                     )
                 )
         }

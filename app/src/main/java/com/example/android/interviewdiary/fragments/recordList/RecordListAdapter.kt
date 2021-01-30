@@ -185,7 +185,7 @@ class RecordListAdapter @Inject constructor(
 
         data class Record(
             val recordId: Int?,
-            val values: List<Int>,
+            val values: List<Float>,
             val date: LocalDate,
             val note: String,
             val isHighlighted: Boolean = false

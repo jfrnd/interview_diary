@@ -32,7 +32,7 @@ import javax.inject.Inject
 class InterviewNavigationViewModel @Inject constructor(
     private val repo: AppRepository,
     private val glide: RequestManager,
-    private val state: SavedStateHandle
+    state: SavedStateHandle
 ) : ViewModel() {
 
     val date: LocalDate = state.get<String>(DATE)!!.toLocalDate()

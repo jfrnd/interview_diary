@@ -32,7 +32,7 @@ data class Tracker(
      *
      * Multiple Choice: [x]:= answerID of an answer option
      */
-    val configValues: List<Int>,
+    val configValues: List<Float>,
     val answerOptions: Map<Int, String> = emptyMap(),
     val type: TrackerType,
     val unit: String = "",

@@ -131,7 +131,7 @@ class AddEditFragment @Inject constructor(
             }
 
             setOnAnswerDeleteClick { answerId ->
-                viewModel.onAnswerRemoveClick(answerId)
+                viewModel.onAnswerRemoveClick(answerId.toFloat())
             }
 
             setOnItemMoveStartListener {
@@ -172,7 +172,7 @@ class AddEditFragment @Inject constructor(
                     is AddEditViewModel.Event.OpenEraseRecordEntriesDialog -> {
                         val dialog = AddEditEraseRecordEntriesDialog().apply {
                             arguments = Bundle().apply {
-                                putIntArray(DELETED_ANSWER_IDS, event.answerIds.toIntArray())
+                                putIntArray(DELETED_ANSWER_IDS, event.answerIds.map { it.toInt() }.toIntArray())
                             }
                         }
                         dialog.show(

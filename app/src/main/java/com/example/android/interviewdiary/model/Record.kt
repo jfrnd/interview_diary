@@ -44,6 +44,6 @@ data class Record(
      *
      * Multiple Choice: [x]:= answerID of the selected answer options
      */
-    val values: List<Int> = listOf(),
+    val values: List<Float> = listOf(),
     val note: String = ""
 ) : Parcelable

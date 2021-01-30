@@ -20,7 +20,7 @@ object InitDatabaseUtils {
                 question = context.resources.getString(R.string.example_tracker_how_was_your_day),
                 imageUri = Uri.parse("android.resource://" + context.packageName + "/drawable/iv_mood")
                     .toString(),
-                configValues = listOf(0, 1, 2, 3, 4),
+                configValues = listOf(0f, 1f, 2f, 3f, 4f),
                 answerOptions = mapOf(
                     0 to context.resources.getString(R.string.example_tracker_how_was_your_day_a_one),
                     1 to context.resources.getString(R.string.example_tracker_how_was_your_day_a_two),
@@ -38,7 +38,7 @@ object InitDatabaseUtils {
                 question = context.resources.getString(R.string.example_tracker_did_you_help),
                 imageUri = Uri.parse("android.resource://" + context.packageName + "/drawable/iv_help")
                     .toString(),
-                configValues = listOf(0, 1),
+                configValues = listOf(0f, 1f),
                 answerOptions = emptyMap(),
                 enabledFeatures = listOf(Feature.NOTES),
                 unit = "",
@@ -49,7 +49,7 @@ object InitDatabaseUtils {
                 question = context.resources.getString(R.string.example_tracker_how_many_km),
                 imageUri = Uri.parse("android.resource://" + context.packageName + "/drawable/iv_running")
                     .toString(),
-                configValues = listOf(10, 0, 20),
+                configValues = listOf(10f, 0f, 20f),
                 answerOptions = emptyMap(),
                 enabledFeatures = listOf(Feature.NOTES),
                 unit = context.resources.getString(R.string.example_tracker_km),
@@ -60,7 +60,7 @@ object InitDatabaseUtils {
                 question = context.resources.getString(R.string.example_tracker_how_long_run),
                 imageUri = Uri.parse("android.resource://" + context.packageName + "/drawable/iv_running_time")
                     .toString(),
-                configValues = listOf(0, 45, 0),
+                configValues = listOf(0f, 45f, 0f),
                 answerOptions = emptyMap(),
                 enabledFeatures = listOf(Feature.NOTES),
                 unit = "",
@@ -71,7 +71,7 @@ object InitDatabaseUtils {
                 question = context.resources.getString(R.string.example_tracker_how_long_gym),
                 imageUri = Uri.parse("android.resource://" + context.packageName + "/drawable/iv_gym")
                     .toString(),
-                configValues = listOf(1, 0, 0),
+                configValues = listOf(1f, 0f, 0f),
                 answerOptions = emptyMap(),
                 enabledFeatures = listOf(Feature.NOTES),
                 unit = "",
@@ -82,7 +82,7 @@ object InitDatabaseUtils {
                 question = context.resources.getString(R.string.example_tracker_how_many_km_cycle),
                 imageUri = Uri.parse("android.resource://" + context.packageName + "/drawable/iv_bike")
                     .toString(),
-                configValues = listOf(0, 0, 150),
+                configValues = listOf(0f, 0f, 150f),
                 answerOptions = emptyMap(),
                 enabledFeatures = listOf(Feature.NOTES),
                 unit = context.resources.getString(R.string.example_tracker_km),
@@ -93,7 +93,7 @@ object InitDatabaseUtils {
                 question = context.resources.getString(R.string.example_tracker_eat),
                 imageUri = Uri.parse("android.resource://" + context.packageName + "/drawable/iv_hobby")
                     .toString(),
-                configValues = listOf(0, 1, 2, 3),
+                configValues = listOf(0f, 1f, 2f, 3f),
                 answerOptions = mapOf(
                     0 to context.resources.getString(R.string.example_tracker_eat_a_one),
                     1 to context.resources.getString(R.string.example_tracker_eat_a_two),
@@ -109,7 +109,7 @@ object InitDatabaseUtils {
                 question = context.resources.getString(R.string.example_tracker_weight),
                 imageUri = Uri.parse("android.resource://" + context.packageName + "/drawable/iv_weight")
                     .toString(),
-                configValues = listOf(75, 70, 80),
+                configValues = listOf(75f, 70f, 80f),
                 answerOptions = emptyMap(),
                 enabledFeatures = listOf(Feature.NOTES),
                 unit = context.resources.getString(R.string.example_tracker_kg),
@@ -120,7 +120,7 @@ object InitDatabaseUtils {
                 question = context.resources.getString(R.string.example_tracker_how_long_sleep),
                 imageUri = Uri.parse("android.resource://" + context.packageName + "/drawable/iv_sleep")
                     .toString(),
-                configValues = listOf(7, 30, 0),
+                configValues = listOf(7f, 30f, 0f),
                 answerOptions = emptyMap(),
                 enabledFeatures = listOf(Feature.NOTES),
                 unit = "",
@@ -131,7 +131,7 @@ object InitDatabaseUtils {
                 question = context.resources.getString(R.string.example_tracker_youtube),
                 imageUri = Uri.parse("android.resource://" + context.packageName + "/drawable/iv_youtube")
                     .toString(),
-                configValues = listOf(0, 30, 0),
+                configValues = listOf(0f, 30f, 0f),
                 answerOptions = emptyMap(),
                 enabledFeatures = listOf(Feature.NOTES),
                 unit = "",
@@ -179,7 +179,7 @@ object InitDatabaseUtils {
                 trackerId = tracker.trackerId,
                 date = date,
                 note = note,
-                values = tracker.configValues.shuffled().take(1) as List<Int>
+                values = tracker.configValues.shuffled().take(1)
             )
             tracker.type == TrackerType.MULTIPLE_CHOICE && tracker.enabledFeatures.contains(Feature.MULTI_SELECTION) -> {
                 Record(
@@ -187,7 +187,7 @@ object InitDatabaseUtils {
                     date = date,
                     note = note,
                     values = tracker.configValues.shuffled()
-                        .take(Random.nextInt(3)) as List<Int>
+                        .take(Random.nextInt(3))
                 )
             }
             tracker.type == TrackerType.TIME -> Record(
@@ -195,9 +195,9 @@ object InitDatabaseUtils {
                 date = date,
                 note = note,
                 values = listOf(
-                    tracker.configValues[0]!! + Random.nextInt(2),
-                    Random.nextInt(60),
-                    0
+                    tracker.configValues[0] + Random.nextInt(2).toFloat(),
+                    Random.nextInt(60).toFloat(),
+                    0f
                 )
             )
             tracker.type == TrackerType.NUMERIC -> Record(
@@ -206,9 +206,9 @@ object InitDatabaseUtils {
                 note = note,
                 values = listOf(
                     Random.nextInt(
-                        tracker.configValues[1],
-                        tracker.configValues[2]
-                    )
+                        tracker.configValues[1].toInt(),
+                        tracker.configValues[2].toInt()
+                    ).toFloat()
                 )
             )
             tracker.type == TrackerType.YES_NO -> Record(
@@ -217,8 +217,8 @@ object InitDatabaseUtils {
                 note = note,
                 values = listOf(
                     Random.nextInt(
-                        tracker.configValues[1],
-                    )
+                        tracker.configValues[1].toInt(),
+                    ).toFloat()
                 )
             )
             else -> Record(

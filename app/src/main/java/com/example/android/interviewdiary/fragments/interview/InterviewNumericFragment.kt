@@ -10,6 +10,7 @@ import com.bumptech.glide.RequestManager
 import com.example.android.interviewdiary.R
 import com.example.android.interviewdiary.databinding.FragmentInterviewNumericBinding
 import com.example.android.interviewdiary.model.Feature
+import com.example.android.interviewdiary.other.utils.ConverterUtil.round
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
@@ -79,7 +80,7 @@ class InterviewNumericFragment @Inject constructor(
                 valueTo = childViewModel.tracker.configValues[2].toFloat()
                 valueFrom = childViewModel.tracker.configValues[1].toFloat()
                 addOnChangeListener { _, value, _ ->
-                    childViewModel.onNumericTimeValueChanged(0, value.toInt())
+                    childViewModel.onNumericTimeValueChanged(0, value)
                 }
             }
             btnPlus.setOnClickListener {
@@ -96,13 +97,18 @@ class InterviewNumericFragment @Inject constructor(
             childViewModel.streamCurrentValues().collect { curValues ->
                 binding.body.slider.apply {
                     if (curValues.isNotEmpty()) {
-                        if (curValues[0] >= valueFrom.toInt() && curValues[0] <= valueTo.toInt()) {
-                            value = curValues[0].toFloat()
-                            binding.body.tvVal.text = curValues[0].toString()
-                        } else {
-                            value = childViewModel.tracker.configValues[0].toFloat()
+                        if (curValues[0] in valueFrom..valueTo) {
+                            value = curValues[0]
                             binding.body.tvVal.text =
-                                childViewModel.tracker.configValues[0].toString()
+                                if (childViewModel.tracker.enabledFeatures.contains(Feature.DECIMAL))
+                                    curValues[0].round(1).toString()
+                                else curValues[0].toInt().toString()
+                        } else {
+                            value = childViewModel.tracker.configValues[0]
+                            binding.body.tvVal.text =
+                                if (childViewModel.tracker.enabledFeatures.contains(Feature.DECIMAL))
+                                    curValues[0].round(1).toString()
+                                else curValues[0].toInt().toString()
                         }
                     }
                 }

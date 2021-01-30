@@ -87,10 +87,10 @@ class InterviewYesNoFragment @Inject constructor(
     private fun setObserver() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             childViewModel.streamCurrentValues().collect { curValues ->
-                binding.body.btnNo.isChecked = curValues.contains(0)
-                binding.body.ivSaveNo.isVisible = curValues.contains(0)
-                binding.body.btnYes.isChecked = curValues.contains(1)
-                binding.body.ivSaveYes.isVisible = curValues.contains(1)
+                binding.body.btnNo.isChecked = curValues.contains(0f)
+                binding.body.ivSaveNo.isVisible = curValues.contains(0f)
+                binding.body.btnYes.isChecked = curValues.contains(1f)
+                binding.body.ivSaveYes.isVisible = curValues.contains(1f)
             }
         }
     }
