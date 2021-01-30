@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.interviewdiary.R
 import com.example.android.interviewdiary.databinding.ItemRecordListDateBinding
 import com.example.android.interviewdiary.databinding.ItemRecordListRecordBinding
+import com.example.android.interviewdiary.model.Tracker
 import com.example.android.interviewdiary.other.utils.ConverterUtil.toDisplayedString
 import com.example.android.interviewdiary.other.utils.ConverterUtil.differenceToToday
 import java.time.LocalDate
@@ -86,7 +87,7 @@ class RecordListAdapter @Inject constructor(
             binding.tvDate.apply {
                 text = currentItem.date.toDisplayedString(context = context)
                 typeface = if (currentItem.isHighlighted) {
-                    setTextColor(ContextCompat.getColor(itemView.context,R.color.primary_color))
+                    setTextColor(ContextCompat.getColor(itemView.context, R.color.primary_color))
                     Typeface.DEFAULT_BOLD
                 } else {
                     setTextColor(Color.GRAY)
@@ -108,11 +109,11 @@ class RecordListAdapter @Inject constructor(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(currentItem: Item.Record) {
-            binding.tvAnswer.text = currentItem.answer
+            binding.tvAnswer.text = currentItem.values.toDisplayedString(tracker, itemView.context)
             binding.tvDate.apply {
                 text = currentItem.date.toDisplayedString(context = context)
                 typeface = if (currentItem.isHighlighted) {
-                    setTextColor(ContextCompat.getColor(itemView.context,R.color.primary_color))
+                    setTextColor(ContextCompat.getColor(itemView.context, R.color.primary_color))
                     Typeface.DEFAULT_BOLD
                 } else {
                     setTextColor(Color.GRAY)
@@ -138,6 +139,12 @@ class RecordListAdapter @Inject constructor(
 
             }
         }
+    }
+
+    private var tracker: Tracker? = null
+
+    fun setTracker(tracker: Tracker?) {
+        this.tracker = tracker
     }
 
     private var onItemClickListener: ((LocalDate) -> Unit)? = null
@@ -178,7 +185,7 @@ class RecordListAdapter @Inject constructor(
 
         data class Record(
             val recordId: Int?,
-            val answer: String,
+            val values: List<Int>,
             val date: LocalDate,
             val note: String,
             val isHighlighted: Boolean = false
@@ -190,6 +197,7 @@ class RecordListAdapter @Inject constructor(
 
     }
 }
+
 
 
 

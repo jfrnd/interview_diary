@@ -123,6 +123,8 @@ class RecordListFragment @Inject constructor(
         itemTouchHelper.attachToRecyclerView(binding.rvRecordList)
 
         recordListAdapter.apply {
+            setTracker(viewModel.tracker)
+
             setOnItemClickListener { date ->
                 viewModel.onItemClick(date)
             }

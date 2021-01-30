@@ -60,7 +60,7 @@ class RecordListViewModel @Inject constructor(
                     result.add(
                         RecordListAdapter.Item.Record(
                             record.recordId,
-                            record.values.toDisplayedString(tracker!!),
+                            record.values,
                             record.date,
                             record.note,
                             date == focusedDate

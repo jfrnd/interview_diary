@@ -59,8 +59,8 @@ class DefaultAppRepository @Inject constructor(
         return dao.getAllTrackers()
     }
 
-    override suspend fun getAllTrackerIds(): IntArray {
-        return dao.getAllTrackerIds()
+    override fun streamAllTrackerIds(): Flow<IntArray> {
+        return dao.streamAllTrackerIds()
     }
 
     override fun streamTracker(trackerId: Int): Flow<Tracker?> {

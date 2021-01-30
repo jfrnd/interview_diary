@@ -29,16 +29,22 @@ object ConverterUtil {
 
     }
 
-    fun List<Int>.toDisplayedString(tracker: Tracker): String {
-        return when (tracker.type) {
-            TrackerType.MULTIPLE_CHOICE -> this.map { answerId ->
-                tracker.answerOptions[answerId]
-            }.joinToString(", ")
-            TrackerType.NUMERIC -> this.first().toString() + " " + tracker.unit
-            TrackerType.TIME -> this.joinToString(":") { it.toString().padStart(2, '0') }
-        }
+    fun List<Int>.toDisplayedString(tracker: Tracker?, context: Context): String {
+        tracker?.let {
+            return when (tracker.type) {
+                TrackerType.MULTIPLE_CHOICE -> this.map { answerId ->
+                    tracker.answerOptions[answerId]
+                }.joinToString(", ")
+                TrackerType.NUMERIC -> this.first().toString() + " " + tracker.unit
+                TrackerType.TIME -> this.joinToString(":") { it.toString().padStart(2, '0') }
+                TrackerType.YES_NO -> when (this) {
+                    listOf(1) -> context.getString(R.string.yes)
+                    listOf(0) -> context.getString(R.string.no)
+                    else -> ""
+                }
+            }
+        } ?: return ""
     }
-
 
     fun LocalDate?.toDisplayedString(detailed: Boolean = false, context: Context): String {
         val tomorrow = LocalDate.now().plusDays(1)
@@ -55,10 +61,18 @@ object ConverterUtil {
         else
             return when (this) {
                 null -> ""
-                today -> context.resources.getString(R.string.today) + ", " + "${dayOfMonth.toString().padStart(2, '0')} $month".take(6)
-                yesterday -> context.resources.getString(R.string.yesterday) + ", " + "${dayOfMonth.toString().padStart(2, '0')} $month".take(6)
-                tomorrow -> context.resources.getString(R.string.tomorrow) + ", " + "${dayOfMonth.toString().padStart(2, '0')} $month".take(6)
-                else -> "$dayOfWeek".toLowerCase(Locale.ROOT).capitalize() + ", " + "${dayOfMonth.toString().padStart(2, '0')} $month".take(6)
+                today -> context.resources.getString(R.string.today) + ", " + "${
+                    dayOfMonth.toString().padStart(2, '0')
+                } $month".take(6)
+                yesterday -> context.resources.getString(R.string.yesterday) + ", " + "${
+                    dayOfMonth.toString().padStart(2, '0')
+                } $month".take(6)
+                tomorrow -> context.resources.getString(R.string.tomorrow) + ", " + "${
+                    dayOfMonth.toString().padStart(2, '0')
+                } $month".take(6)
+                else -> "$dayOfWeek".toLowerCase(Locale.ROOT).capitalize() + ", " + "${
+                    dayOfMonth.toString().padStart(2, '0')
+                } $month".take(6)
             }
     }
 
@@ -71,6 +85,11 @@ object ConverterUtil {
                 TrackerType.TIME -> listOf(this.joinToString(":") {
                     it.toString().padStart(2, '0')
                 })
+                TrackerType.YES_NO -> when (this) {
+                    listOf(1) -> listOf(context.getString(R.string.yes))
+                    listOf(0) -> listOf(context.getString(R.string.no))
+                    else -> listOf("")
+                }
             }
     }
 

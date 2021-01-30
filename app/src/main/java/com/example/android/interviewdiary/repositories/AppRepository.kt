@@ -22,7 +22,7 @@ interface AppRepository {
 
     suspend fun getTracker(trackerId: Int): Tracker?
     suspend fun getAllTrackers(): List<Tracker>
-    suspend fun getAllTrackerIds(): IntArray
+    fun streamAllTrackerIds(): Flow<IntArray>
 
     fun streamTracker(trackerId: Int): Flow<Tracker?>
     fun streamAllTrackers(): Flow<List<Tracker>>

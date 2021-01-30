@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    tools:context=".fragments.interview.InterviewTimeFragment">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_no"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:backgroundTint="@color/color_btn_item_interview_answer"
+        android:checkable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="@string/no"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_yes"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_save_no"
+        android:layout_width="20dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="64dp"
+        android:elevation="4dp"
+        android:tint="@color/secondary_color"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_no"
+        app:layout_constraintEnd_toEndOf="@+id/btn_no"
+        app:layout_constraintStart_toStartOf="@+id/btn_no"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_save" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_yes"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/color_btn_item_interview_answer"
+        android:checkable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="@string/yes"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_no"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_save_yes"
+        android:layout_width="20dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="64dp"
+        android:elevation="4dp"
+        android:tint="@color/secondary_color"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_yes"
+        app:layout_constraintEnd_toEndOf="@+id/btn_yes"
+        app:layout_constraintStart_toStartOf="@+id/btn_yes"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_save" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

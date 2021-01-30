@@ -33,12 +33,12 @@ object InitDatabaseUtils {
             ),
             Tracker(
                 trackerId = 2,
-                type = TrackerType.MULTIPLE_CHOICE,
+                type = TrackerType.YES_NO,
                 question = context.resources.getString(R.string.example_tracker_did_you_help),
                 imageUri = Uri.parse("android.resource://" + context.packageName + "/drawable/iv_help")
                     .toString(),
                 configValues = listOf(0, 1),
-                answerOptions = mapOf(0 to context.resources.getString(R.string.yes), 1 to context.resources.getString(R.string.no)),
+                answerOptions = emptyMap(),
                 multiSelectionEnabled = false,
                 unit = "",
             ),

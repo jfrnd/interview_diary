@@ -59,8 +59,10 @@ class FakeAppRepository : AppRepository {
         return fakeTrackers
     }
 
-    override suspend fun getAllTrackerIds(): IntArray {
-        return fakeTrackers.map { it.trackerId }.toIntArray()
+    override fun streamAllTrackerIds(): Flow<IntArray> {
+        return fakeTrackersStream.flatMapLatest { trackers ->
+            flowOf(trackers.map { it.trackerId }.toIntArray())
+        }
     }
 
     override fun streamTracker(trackerId: Int): Flow<Tracker?> {
@@ -147,7 +149,7 @@ class FakeAppRepository : AppRepository {
         trackerIds: IntArray,
         date: LocalDate
     ): Flow<List<Record?>> {
-        return fakeRecordsStream.flatMapLatest {records->
+        return fakeRecordsStream.flatMapLatest { records ->
             flowOf(records.filter { it.date.isBefore(date.plusDays(1)) })
         }
     }

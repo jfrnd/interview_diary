@@ -63,6 +63,7 @@ class InterviewChildViewModel @Inject constructor(
                     TrackerType.MULTIPLE_CHOICE -> record?.values ?: emptyList()
                     TrackerType.TIME -> record?.values ?: tracker.configValues
                     TrackerType.NUMERIC -> record?.values ?: listOf(tracker.configValues[0])
+                    TrackerType.YES_NO -> record?.values ?: emptyList()
                 }
                 currentNote.value = databaseRecord?.note ?: ""
                 state.set(CURRENT_NOTE, currentNote.value)
@@ -122,8 +123,10 @@ class InterviewChildViewModel @Inject constructor(
         saveRecord()
     }
 
-    fun onAnswerClick(answerId: Int) {
+    fun onAnswerClick(answerId: Int, forceNoteInputInCurrentSession: Boolean) {
         updateMultipleChoiceSelection(answerId)
+        if (!tracker.multiSelectionEnabled)
+            onConfirmClick(forceNoteInputInCurrentSession)
     }
 
     fun onNumericTimeValueChanged(index: Int, newValue: Int) {
@@ -157,11 +160,15 @@ class InterviewChildViewModel @Inject constructor(
         }
     }
 
-    private fun updateMultipleChoiceSelection(answerId: Int) {
+    private fun updateMultipleChoiceSelection(clickedAnswerId: Int) {
         currentValues.value = when {
-            currentValues.value.contains(answerId) -> currentValues.value.filter { it != answerId }
-            tracker.multiSelectionEnabled -> currentValues.value.plus(answerId)
-            else -> arrayListOf(answerId)
+            currentValues.value.contains(clickedAnswerId) && tracker.multiSelectionEnabled ->
+                currentValues.value.filter { it != clickedAnswerId }
+            !currentValues.value.contains(clickedAnswerId) && tracker.multiSelectionEnabled ->
+                currentValues.value.plus(clickedAnswerId)
+            currentValues.value.contains(clickedAnswerId) && !tracker.multiSelectionEnabled ->
+                currentValues.value
+            else -> arrayListOf(clickedAnswerId)
         }
         state.set(CURRENT_VALUES, currentValues.value)
     }
@@ -233,7 +240,21 @@ class InterviewChildViewModel @Inject constructor(
         }
     }
 
+    fun onYesClick(forceNoteInputInCurrentSession: Boolean) {
+        updateYesNoSelection(true)
+        onConfirmClick(forceNoteInputInCurrentSession)
+    }
 
+    fun onNoClick(forceNoteInputInCurrentSession: Boolean) {
+        updateYesNoSelection(false)
+        onConfirmClick(forceNoteInputInCurrentSession)
+    }
+
+    private fun updateYesNoSelection(yes: Boolean) {
+        if (yes) currentValues.value = listOf(1)
+        else currentValues.value = listOf(0)
+        state.set(CURRENT_VALUES, currentValues.value)
+    }
 
     sealed class ChildEvent {
         object ForceOpenNoteDialog : ChildEvent()

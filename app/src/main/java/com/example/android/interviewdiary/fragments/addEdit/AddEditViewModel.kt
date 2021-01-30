@@ -3,6 +3,7 @@ package com.example.android.interviewdiary.fragments.addEdit
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.example.android.interviewdiary.ADD_TRACKER_RESULT_OK
 import com.example.android.interviewdiary.DELETE_TRACKER_RESULT_OK
 import com.example.android.interviewdiary.EDIT_TRACKER_RESULT_OK
 import com.example.android.interviewdiary.model.*
@@ -100,6 +101,7 @@ class AddEditViewModel @Inject constructor(
             TrackerType.MULTIPLE_CHOICE -> listOf(1)
             TrackerType.NUMERIC -> listOf(65, 60, 70)
             TrackerType.TIME -> listOf(0, 0, 0)
+            TrackerType.YES_NO -> listOf(0, 1)
         }
     )
 
@@ -169,6 +171,7 @@ class AddEditViewModel @Inject constructor(
             TrackerType.MULTIPLE_CHOICE -> createMCItems()
             TrackerType.NUMERIC -> createNumericItems()
             TrackerType.TIME -> createTimePickerItems()
+            TrackerType.YES_NO -> flowOf(listOf())
         }
         return combine(genericItems, specificItems) { genericItems, specificItems ->
             genericItems + specificItems
@@ -425,7 +428,7 @@ class AddEditViewModel @Inject constructor(
         )
         viewModelScope.launch {
             repo.insertTracker(newTracker)
-            navigateBackWithResult(EDIT_TRACKER_RESULT_OK)
+            navigateBackWithResult(ADD_TRACKER_RESULT_OK)
         }
     }
 
@@ -495,6 +498,7 @@ class AddEditViewModel @Inject constructor(
             : Boolean {
         return when (trackerType) {
             TrackerType.TIME -> true
+            TrackerType.YES_NO -> true
             TrackerType.MULTIPLE_CHOICE -> {
                 validateDataMultipleChoice(configValues.value, answerOptions.value)
             }

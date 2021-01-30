@@ -146,6 +146,7 @@ class InterviewNavigationViewModel @Inject constructor(
             TrackerType.MULTIPLE_CHOICE -> InterviewMultipleChoiceFragment(glide)
             TrackerType.NUMERIC -> InterviewNumericFragment(glide)
             TrackerType.TIME -> InterviewTimeFragment(glide)
+            TrackerType.YES_NO -> InterviewYesNoFragment(glide)
         }
 
         return newFragment.apply {

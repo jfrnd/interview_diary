@@ -75,21 +75,21 @@ class HomeViewModel @Inject constructor(
         flowOf(result)
     }
 
-    private var currentTrackerIds = MutableStateFlow(intArrayOf())
+    private fun streamCurrentTrackerIds() = repo.streamAllTrackerIds()
 
     init {
-        viewModelScope.launch {
-            currentTrackerIds.value = repo.getAllTrackerIds()
-        }
+//        viewModelScope.launch {
+//            currentTrackerIds = repo.streamAllTrackerIds()
+//        }
     }
 
     private fun streamTrackers() =
-        currentTrackerIds.flatMapLatest {
+        streamCurrentTrackerIds().flatMapLatest {
             repo.streamTrackers(it)
         }
 
     private fun streamLatestRecords() =
-        combine(currentTrackerIds, currentDate) { trackerIds, currentDate ->
+        combine(streamCurrentTrackerIds(), currentDate) { trackerIds, currentDate ->
             trackerIds to currentDate
         }.flatMapLatest { (trackerIds, currentDate) ->
             repo.streamPastRecords(trackerIds, currentDate).flatMapLatest {records ->

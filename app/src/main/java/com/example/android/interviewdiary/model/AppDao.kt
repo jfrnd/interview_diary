@@ -37,7 +37,7 @@ interface AppDao {
     suspend fun getAllTrackers(): List<Tracker>
 
     @Query("SELECT ALL tracker_id FROM tracker_table")
-    suspend fun getAllTrackerIds(): IntArray
+    fun streamAllTrackerIds(): Flow<IntArray>
 
 
     @Query("SELECT * FROM tracker_table WHERE tracker_id = :trackerId")

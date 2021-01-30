@@ -56,8 +56,7 @@ data class Tracker(
 ) : Parcelable
 
 @Parcelize
-enum class TrackerType : Parcelable { MULTIPLE_CHOICE, NUMERIC, TIME }
+enum class TrackerType : Parcelable { MULTIPLE_CHOICE, NUMERIC, TIME, YES_NO }
 // TODO Add new tracker types: e.g.
-//      YES/NO question,
 //      GPS location (e.g. if you are on a round trip,
 //      Text Only input for open questions (e.g. describe your day)

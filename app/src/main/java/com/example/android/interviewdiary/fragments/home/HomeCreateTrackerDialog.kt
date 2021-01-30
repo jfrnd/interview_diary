@@ -26,10 +26,11 @@ class HomeCreateTrackerDialog : DialogFragment(R.layout.dialog_home_create_track
 
             btnConfirm.setOnClickListener {
                 val questionInput = binding.etValue.text.toString().trim()
-                val trackerType: TrackerType? = when {
+                val trackerType: TrackerType? = when  {
                     binding.rbMultipleChoice.isChecked -> TrackerType.MULTIPLE_CHOICE
                     binding.rbNumeric.isChecked -> TrackerType.NUMERIC
                     binding.rbTime.isChecked -> TrackerType.TIME
+                    binding.rbYesNo.isChecked -> TrackerType.YES_NO
                     else -> null
                 }
                 if (homeViewModel.onCreateTrackerConfirmClick(questionInput, trackerType))

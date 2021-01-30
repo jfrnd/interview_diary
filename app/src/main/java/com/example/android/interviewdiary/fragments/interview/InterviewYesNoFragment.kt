@@ -3,22 +3,25 @@ package com.example.android.interviewdiary.fragments.interview
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.RequestManager
 import com.example.android.interviewdiary.R
 import com.example.android.interviewdiary.databinding.FragmentInterviewNumericBinding
+import com.example.android.interviewdiary.databinding.FragmentInterviewYesNoBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class InterviewNumericFragment @Inject constructor(
+class InterviewYesNoFragment @Inject constructor(
     private val glide: RequestManager
-) : Fragment(R.layout.fragment_interview_numeric) {
+) : Fragment(R.layout.fragment_interview_yes_no) {
 
-    private lateinit var binding: FragmentInterviewNumericBinding
+    private lateinit var binding: FragmentInterviewYesNoBinding
 
     private val childViewModel: InterviewChildViewModel by viewModels()
     private val navigationViewModel: InterviewNavigationViewModel by viewModels(ownerProducer = { requireParentFragment() })
@@ -26,7 +29,7 @@ class InterviewNumericFragment @Inject constructor(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentInterviewNumericBinding.bind(view)
+        binding = FragmentInterviewYesNoBinding.bind(view)
 
         setBindingObject()
 
@@ -70,22 +73,12 @@ class InterviewNumericFragment @Inject constructor(
         binding.header.tvQuestion.text = childViewModel.tracker.question
 
         binding.body.apply {
-            tvMin.text = childViewModel.tracker.configValues[1].toString()
-            tvMax.text = childViewModel.tracker.configValues[2].toString()
-            tvUnit.text = childViewModel.tracker.unit
-            slider.apply {
-                value = childViewModel.tracker.configValues[1]!!.toFloat()
-                valueTo = childViewModel.tracker.configValues[2]!!.toFloat()
-                valueFrom = childViewModel.tracker.configValues[1]!!.toFloat()
-                addOnChangeListener { _, value, _ ->
-                    childViewModel.onNumericTimeValueChanged(0, value.toInt())
-                }
+            btnYes.setOnClickListener {
+                childViewModel.onYesClick(navigationViewModel.forceNoteInputInCurrentSession)
             }
-            btnPlus.setOnClickListener {
-                if (slider.value < slider.valueTo) slider.value++
-            }
-            btnMinus.setOnClickListener {
-                if (slider.valueFrom < slider.value) slider.value--
+            btnNo.setOnClickListener {
+                childViewModel.onNoClick(navigationViewModel.forceNoteInputInCurrentSession)
+
             }
         }
     }
@@ -93,18 +86,10 @@ class InterviewNumericFragment @Inject constructor(
     private fun setObserver() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             childViewModel.streamCurrentValues().collect { curValues ->
-                binding.body.slider.apply {
-                    if (curValues.isNotEmpty()) {
-                        if (curValues[0]!! >= valueFrom.toInt() && curValues[0]!! <= valueTo.toInt()) {
-                            value = curValues[0]!!.toFloat()
-                            binding.body.tvVal.text = curValues[0].toString()
-                        } else {
-                            value = childViewModel.tracker.configValues[0]!!.toFloat()
-                            binding.body.tvVal.text =
-                                childViewModel.tracker.configValues[0]!!.toString()
-                        }
-                    }
-                }
+                binding.body.btnNo.isChecked = curValues.contains(0)
+                binding.body.ivSaveNo.isVisible = curValues.contains(0)
+                binding.body.btnYes.isChecked = curValues.contains(1)
+                binding.body.ivSaveYes.isVisible = curValues.contains(1)
             }
         }
     }

@@ -42,7 +42,7 @@ class InterviewMultipleChoiceFragment @Inject constructor(
 
     private fun setAdapter(interviewMultipleChoiceAdapter: InterviewMultipleChoiceAdapter) {
         interviewMultipleChoiceAdapter.setOnItemClickListener { answerId ->
-            childViewModel.onAnswerClick(answerId)
+            childViewModel.onAnswerClick(answerId, navigationViewModel.forceNoteInputInCurrentSession)
         }
 
         interviewMultipleChoiceAdapter.setOnNoteClickListener { ->

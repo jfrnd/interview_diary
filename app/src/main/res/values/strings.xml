@@ -168,4 +168,5 @@
     <string name="example_tracker_km">km</string>
     <string name="example_tracker_how_long_sleep">How many hours did you sleep last night?</string>
     <string name="example_tracker_youtube">How many hours did you spend on Youtube today?</string>
+    <string name="home_dialog_radio_button_yes_no">Yes / No</string>
 </resources>

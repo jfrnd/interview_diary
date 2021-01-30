@@ -97,7 +97,7 @@ class HomeListAdapter @Inject constructor(
 
             binding.apply {
                 tvQuestion.text = currentTracker.question
-                tvAnswer.text = currentRecord?.values?.toDisplayedString(currentItem.tracker)
+                tvAnswer.text = currentRecord?.values?.toDisplayedString(currentItem.tracker, itemView.context)
                     ?: itemView.context.getString(R.string.home_item_not_answered)
                 tvDate.text = currentDay.toDisplayedString(false,itemView.context)
                 glide.load(currentTracker.imageUri).into(ivHome)
