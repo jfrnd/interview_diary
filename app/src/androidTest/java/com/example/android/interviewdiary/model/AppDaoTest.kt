@@ -81,6 +81,15 @@ class AppDaoTest {
         database.close()
     }
 
+    @Test
+    fun test () {
+        runBlockingTest {
+            val record = dao.getRecord(1)
+            assertThat(record?.recordId).isEqualTo(1)
+
+        }
+    }
+
 //    @Test
 //    fun testOrder() {
 //        var recordsONE = emptyList<Pair<Int,Int>>()

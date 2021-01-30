@@ -22,7 +22,6 @@ class FakeAppRepository : AppRepository {
         fakeRecordsStream = flowOf(records)
     }
 
-
     override suspend fun insertTracker(tracker: Tracker) {
         fakeTrackers.add(tracker)
         updateFakeTrackersStream(fakeTrackers)

@@ -1,5 +1,6 @@
 package com.example.android.interviewdiary.fragments.addEdit
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import com.example.android.interviewdiary.model.TrackerType
 import com.example.android.interviewdiary.repositories.FakeAppRepository
@@ -26,13 +27,10 @@ class AddEditViewModelTest {
     }
 
     @Test
-    fun `add button creates new answer option`() {
+    fun `onAddClick adds a new answer option`() {
+        val sizeInTheBeginning = viewModel.answerOptions.value.size
         viewModel.onAddButtonClick()
-
-        println("add button creates new answer option")
-        println(viewModel.answerOptions.value)
-
-        assertThat(viewModel.answerOptions.value == mapOf(1 to "")).isTrue()
-
+        val sizeAfterOnAddClick = viewModel.answerOptions.value.size
+        assertThat(sizeInTheBeginning + 1 == sizeAfterOnAddClick).isTrue()
     }
 }
