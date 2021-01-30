@@ -3,6 +3,7 @@ package com.example.android.interviewdiary.other.utils
 import android.content.Context
 import android.net.Uri
 import com.example.android.interviewdiary.R
+import com.example.android.interviewdiary.model.Feature
 import com.example.android.interviewdiary.model.Record
 import com.example.android.interviewdiary.model.Tracker
 import com.example.android.interviewdiary.model.TrackerType
@@ -27,8 +28,8 @@ object InitDatabaseUtils {
                     3 to context.resources.getString(R.string.example_tracker_how_was_your_day_a_four),
                     4 to context.resources.getString(R.string.example_tracker_how_was_your_day_a_five),
 
-                ),
-                multiSelectionEnabled = false,
+                    ),
+                enabledFeatures = listOf(Feature.NOTES),
                 unit = "",
             ),
             Tracker(
@@ -39,7 +40,7 @@ object InitDatabaseUtils {
                     .toString(),
                 configValues = listOf(0, 1),
                 answerOptions = emptyMap(),
-                multiSelectionEnabled = false,
+                enabledFeatures = listOf(Feature.NOTES),
                 unit = "",
             ),
             Tracker(
@@ -50,7 +51,7 @@ object InitDatabaseUtils {
                     .toString(),
                 configValues = listOf(10, 0, 20),
                 answerOptions = emptyMap(),
-                multiSelectionEnabled = false,
+                enabledFeatures = listOf(Feature.NOTES),
                 unit = context.resources.getString(R.string.example_tracker_km),
             ),
             Tracker(
@@ -61,7 +62,7 @@ object InitDatabaseUtils {
                     .toString(),
                 configValues = listOf(0, 45, 0),
                 answerOptions = emptyMap(),
-                multiSelectionEnabled = false,
+                enabledFeatures = listOf(Feature.NOTES),
                 unit = "",
             ),
             Tracker(
@@ -72,7 +73,7 @@ object InitDatabaseUtils {
                     .toString(),
                 configValues = listOf(1, 0, 0),
                 answerOptions = emptyMap(),
-                multiSelectionEnabled = false,
+                enabledFeatures = listOf(Feature.NOTES),
                 unit = "",
             ),
             Tracker(
@@ -83,7 +84,7 @@ object InitDatabaseUtils {
                     .toString(),
                 configValues = listOf(0, 0, 150),
                 answerOptions = emptyMap(),
-                multiSelectionEnabled = false,
+                enabledFeatures = listOf(Feature.NOTES),
                 unit = context.resources.getString(R.string.example_tracker_km),
             ),
             Tracker(
@@ -99,7 +100,7 @@ object InitDatabaseUtils {
                     2 to context.resources.getString(R.string.example_tracker_eat_a_three),
                     3 to context.resources.getString(R.string.example_tracker_eat_a_four),
                 ),
-                multiSelectionEnabled = true,
+                enabledFeatures = listOf(Feature.NOTES, Feature.MULTI_SELECTION),
                 unit = "",
             ),
             Tracker(
@@ -110,7 +111,7 @@ object InitDatabaseUtils {
                     .toString(),
                 configValues = listOf(75, 70, 80),
                 answerOptions = emptyMap(),
-                multiSelectionEnabled = false,
+                enabledFeatures = listOf(Feature.NOTES),
                 unit = context.resources.getString(R.string.example_tracker_kg),
             ),
             Tracker(
@@ -121,7 +122,7 @@ object InitDatabaseUtils {
                     .toString(),
                 configValues = listOf(7, 30, 0),
                 answerOptions = emptyMap(),
-                multiSelectionEnabled = false,
+                enabledFeatures = listOf(Feature.NOTES),
                 unit = "",
             ),
             Tracker(
@@ -132,17 +133,21 @@ object InitDatabaseUtils {
                     .toString(),
                 configValues = listOf(0, 30, 0),
                 answerOptions = emptyMap(),
-                multiSelectionEnabled = false,
+                enabledFeatures = listOf(Feature.NOTES),
                 unit = "",
             )
         )
 
     }
 
-    fun createInitRecords(trackers: List<Tracker>, startDate: LocalDate, amountEach: Long): List<Record> {
+    fun createInitRecords(
+        trackers: List<Tracker>,
+        startDate: LocalDate,
+        amountEach: Long
+    ): List<Record> {
         var records = listOf<Record>()
-        trackers.forEach { tracker->
-            records = records + createListOfRandomRecords(tracker,startDate,amountEach)
+        trackers.forEach { tracker ->
+            records = records + createListOfRandomRecords(tracker, startDate, amountEach)
         }
         return records
     }
@@ -170,13 +175,13 @@ object InitDatabaseUtils {
         note: String = "",
     ): Record {
         return when {
-            tracker.type == TrackerType.MULTIPLE_CHOICE && !tracker.multiSelectionEnabled -> Record(
+            tracker.type == TrackerType.MULTIPLE_CHOICE && !tracker.enabledFeatures.contains(Feature.MULTI_SELECTION) -> Record(
                 trackerId = tracker.trackerId,
                 date = date,
                 note = note,
                 values = tracker.configValues.shuffled().take(1) as List<Int>
             )
-            tracker.type == TrackerType.MULTIPLE_CHOICE && tracker.multiSelectionEnabled -> {
+            tracker.type == TrackerType.MULTIPLE_CHOICE && tracker.enabledFeatures.contains(Feature.MULTI_SELECTION) -> {
                 Record(
                     trackerId = tracker.trackerId,
                     date = date,
@@ -195,16 +200,32 @@ object InitDatabaseUtils {
                     0
                 )
             )
-            else -> Record(
+            tracker.type == TrackerType.NUMERIC -> Record(
                 trackerId = tracker.trackerId,
                 date = date,
                 note = note,
                 values = listOf(
                     Random.nextInt(
-                        tracker.configValues[1]!!,
-                        tracker.configValues[2]!!
+                        tracker.configValues[1],
+                        tracker.configValues[2]
                     )
                 )
+            )
+            tracker.type == TrackerType.YES_NO -> Record(
+                trackerId = tracker.trackerId,
+                date = date,
+                note = note,
+                values = listOf(
+                    Random.nextInt(
+                        tracker.configValues[1],
+                    )
+                )
+            )
+            else -> Record(
+                trackerId = tracker.trackerId,
+                date = date,
+                note = note,
+                values = listOf()
             )
         }
     }

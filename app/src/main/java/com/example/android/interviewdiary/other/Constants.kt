@@ -21,6 +21,9 @@ object Constants {
     const val QUESTION = "question"
     const val TRACKER_TYPE = "tracker_type"
 
+
+    const val ENABLED_FEATURES = "enabled_features"
+
     const val IMAGE_URI_STRING = "image_uri"
     const val UNIT = "unit"
     const val CONFIG_VALUES = "config_values"

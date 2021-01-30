@@ -87,11 +87,11 @@ class InterviewChildViewModel @Inject constructor(
                         tracker.question,
                         tracker.imageUri,
                         curNote,
-                        tracker.notesEnabled
+                        tracker.enabledFeatures.contains(Feature.NOTES)
                     )
                 ) + tracker.configValues.map { answerId ->
                     InterviewMultipleChoiceAdapter.Item.Answer(
-                        multiSelectionEnabled = tracker.multiSelectionEnabled,
+                        multiSelectionEnabled = tracker.enabledFeatures.contains(Feature.MULTI_SELECTION),
                         answerId = answerId,
                         text = tracker.answerOptions[answerId]
                             ?: error("answer option with no text"),
@@ -125,7 +125,7 @@ class InterviewChildViewModel @Inject constructor(
 
     fun onAnswerClick(answerId: Int, forceNoteInputInCurrentSession: Boolean) {
         updateMultipleChoiceSelection(answerId)
-        if (!tracker.multiSelectionEnabled)
+        if (!tracker.enabledFeatures.contains(Feature.MULTI_SELECTION))
             onConfirmClick(forceNoteInputInCurrentSession)
     }
 
@@ -152,7 +152,7 @@ class InterviewChildViewModel @Inject constructor(
     }
 
     fun onConfirmClick(forceNoteInputInCurrentSession: Boolean) {
-        if (forceNoteInputInCurrentSession && tracker.notesEnabled && currentNote.value.isBlank())
+        if (forceNoteInputInCurrentSession && tracker.enabledFeatures.contains(Feature.NOTES) && currentNote.value.isBlank())
             forceOpenNoteDialog()
         else {
             saveRecord()
@@ -162,11 +162,11 @@ class InterviewChildViewModel @Inject constructor(
 
     private fun updateMultipleChoiceSelection(clickedAnswerId: Int) {
         currentValues.value = when {
-            currentValues.value.contains(clickedAnswerId) && tracker.multiSelectionEnabled ->
+            currentValues.value.contains(clickedAnswerId) && tracker.enabledFeatures.contains(Feature.MULTI_SELECTION) ->
                 currentValues.value.filter { it != clickedAnswerId }
-            !currentValues.value.contains(clickedAnswerId) && tracker.multiSelectionEnabled ->
+            !currentValues.value.contains(clickedAnswerId) && tracker.enabledFeatures.contains(Feature.MULTI_SELECTION) ->
                 currentValues.value.plus(clickedAnswerId)
-            currentValues.value.contains(clickedAnswerId) && !tracker.multiSelectionEnabled ->
+            currentValues.value.contains(clickedAnswerId) && !tracker.enabledFeatures.contains(Feature.MULTI_SELECTION) ->
                 currentValues.value
             else -> arrayListOf(clickedAnswerId)
         }

@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.RequestManager
 import com.example.android.interviewdiary.R
 import com.example.android.interviewdiary.databinding.FragmentInterviewTimeBinding
+import com.example.android.interviewdiary.model.Feature
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
@@ -43,7 +44,7 @@ class InterviewTimeFragment @Inject constructor(
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             childViewModel.streamCurrentNote().collect { note ->
                 when {
-                    !childViewModel.tracker.notesEnabled -> binding.header.boxNote.visibility =
+                    !childViewModel.tracker.enabledFeatures.contains(Feature.NOTES) -> binding.header.boxNote.visibility =
                         View.GONE
 
                     note.isBlank() -> binding.header.apply {
@@ -101,13 +102,13 @@ class InterviewTimeFragment @Inject constructor(
             childViewModel.streamCurrentValues().collect { curValues ->
                 binding.body.apply {
                     if (curValues.isNotEmpty()) {
-                        curValues.get(0)?.let {
+                        curValues[0].let {
                             npHh.value = it
                         }
-                        curValues.get(1)?.let {
+                        curValues[1].let {
                             npMm.value = it
                         }
-                        curValues.get(2)?.let {
+                        curValues[2].let {
                             npSs.value = it
                         }
                     }

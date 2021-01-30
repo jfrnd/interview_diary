@@ -14,6 +14,7 @@ import com.example.android.interviewdiary.other.Constants.ANSWER_OPTION
 import com.example.android.interviewdiary.other.Constants.NOTES_ENABLED
 import com.example.android.interviewdiary.other.Constants.CONFIG_VALUES
 import com.example.android.interviewdiary.other.Constants.DEFAULT_VALUE
+import com.example.android.interviewdiary.other.Constants.ENABLED_FEATURES
 import com.example.android.interviewdiary.other.Constants.MULTI_SELECTION_ENABLED
 import com.example.android.interviewdiary.other.Constants.IMAGE_URI_STRING
 import com.example.android.interviewdiary.other.Constants.MAX_VALUE
@@ -45,6 +46,7 @@ enum class InvalidInputSnackBar {
     DEF_VAL_SMALLER_THAN_MIN_VAL,
     EMPTY_FIELDS,
 }
+
 @HiltViewModel
 class AddEditViewModel @Inject constructor(
     private val repo: AppRepository,
@@ -77,20 +79,39 @@ class AddEditViewModel @Inject constructor(
         state.set(QUESTION, question.value)
     }
 
-    private var notesEnabled =
-        state.get<Boolean>(NOTES_ENABLED) ?: tracker?.notesEnabled ?: true
-    private var multiSelectionEnabled =
-        state.get<Boolean>(MULTI_SELECTION_ENABLED) ?: tracker?.multiSelectionEnabled ?: false
+//    private var notesEnabled =
+//        state.get<Boolean>(NOTES_ENABLED) ?: tracker?.notesEnabled ?: true
+//    private var multiSelectionEnabled =
+//        state.get<Boolean>(MULTI_SELECTION_ENABLED) ?: tracker?.multiSelectionEnabled ?: false
 
-    fun updateSwitchValue(adapterPosition: Int, isChecked: Boolean) {
-        when (adapterPosition) {
-            SWITCH_NOTE_INPUT_ADAPTER_POSITION -> {
-                notesEnabled = isChecked
-                state.set(NOTES_ENABLED, notesEnabled)
+    private var enabledFeatures =
+        state.get<List<Feature>>(ENABLED_FEATURES) ?: tracker?.enabledFeatures
+        ?: listOf(Feature.NOTES)
+
+
+    fun updateSwitchValue(switchType: Int, isChecked: Boolean) {
+        when (switchType) {
+            SWITCH_TYPE_NOTE_INPUT -> {
+                enabledFeatures = if (isChecked && !enabledFeatures.contains(Feature.NOTES))
+                    enabledFeatures.plus(Feature.NOTES)
+                else
+                    enabledFeatures.minus(Feature.NOTES)
+                state.set(ENABLED_FEATURES, enabledFeatures)
             }
-            SWITCH_MULTI_SELECTION_ADAPTER_POSITION -> {
-                multiSelectionEnabled = isChecked
-                state.set(MULTI_SELECTION_ENABLED, multiSelectionEnabled)
+            SWITCH_TYPE_MULTI_SELECTION -> {
+                enabledFeatures =
+                    if (isChecked && !enabledFeatures.contains(Feature.MULTI_SELECTION))
+                        enabledFeatures.plus(Feature.MULTI_SELECTION)
+                    else
+                        enabledFeatures.minus(Feature.MULTI_SELECTION)
+                state.set(ENABLED_FEATURES, enabledFeatures)
+            }
+            SWITCH_TYPE_DECIMAL -> {
+                enabledFeatures = if (isChecked && !enabledFeatures.contains(Feature.DECIMAL))
+                    enabledFeatures.plus(Feature.DECIMAL)
+                else
+                    enabledFeatures.minus(Feature.DECIMAL)
+                state.set(ENABLED_FEATURES, enabledFeatures)
             }
         }
     }
@@ -188,7 +209,8 @@ class AddEditViewModel @Inject constructor(
                     AddEditAdapter.Item.Question(question),
                     AddEditAdapter.Item.Switch(
                         SWITCH_NOTE_INPUT_ADAPTER_POSITION,
-                        notesEnabled
+                        enabledFeatures.contains(Feature.NOTES),
+                        SWITCH_TYPE_NOTE_INPUT
                     )
                 )
             )
@@ -213,10 +235,15 @@ class AddEditViewModel @Inject constructor(
         }.flatMapLatest { (configValues, unit) ->
             flowOf(
                 listOf(
+                    AddEditAdapter.Item.Switch(
+                        SWITCH_DECIMAL_ADAPTER_POSITION,
+                        enabledFeatures.contains(Feature.DECIMAL),
+                        SWITCH_TYPE_DECIMAL
+                    ),
                     AddEditAdapter.Item.Numeric(0, configValues[0].toString()),
                     AddEditAdapter.Item.Numeric(1, configValues[1].toString()),
                     AddEditAdapter.Item.Numeric(2, configValues[2].toString()),
-                    AddEditAdapter.Item.Unit(unit),
+                    AddEditAdapter.Item.Unit(unit)
                 )
             )
         }
@@ -233,7 +260,8 @@ class AddEditViewModel @Inject constructor(
                 listOf(
                     AddEditAdapter.Item.Switch(
                         SWITCH_MULTI_SELECTION_ADAPTER_POSITION,
-                        multiSelectionEnabled
+                        enabledFeatures.contains(Feature.MULTI_SELECTION),
+                        SWITCH_TYPE_MULTI_SELECTION
                     ), AddEditAdapter.Item.AnswerOptionHeader
                 ) + configValues.mapIndexed { index, answerId ->
                     AddEditAdapter.Item.AnswerOption(
@@ -423,8 +451,7 @@ class AddEditViewModel @Inject constructor(
             configValues = configValues.value,
             unit = unit.value,
             type = trackerType,
-            multiSelectionEnabled = multiSelectionEnabled,
-            notesEnabled = notesEnabled
+            enabledFeatures = enabledFeatures
         )
         viewModelScope.launch {
             repo.insertTracker(newTracker)
@@ -441,8 +468,7 @@ class AddEditViewModel @Inject constructor(
                 configValues = configValues.value,
                 unit = unit.value,
                 type = trackerType,
-                multiSelectionEnabled = multiSelectionEnabled,
-                notesEnabled = notesEnabled
+                enabledFeatures = enabledFeatures
             )
         repo.updateTracker(updatedTracker)
         navigateBackWithResult(EDIT_TRACKER_RESULT_OK)

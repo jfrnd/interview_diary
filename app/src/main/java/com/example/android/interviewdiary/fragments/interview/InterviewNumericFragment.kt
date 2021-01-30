@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.RequestManager
 import com.example.android.interviewdiary.R
 import com.example.android.interviewdiary.databinding.FragmentInterviewNumericBinding
+import com.example.android.interviewdiary.model.Feature
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
@@ -43,7 +44,7 @@ class InterviewNumericFragment @Inject constructor(
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             childViewModel.streamCurrentNote().collect { note ->
                 when {
-                    !childViewModel.tracker.notesEnabled -> binding.header.boxNote.visibility =
+                    !childViewModel.tracker.enabledFeatures.contains(Feature.NOTES) -> binding.header.boxNote.visibility =
                         View.GONE
 
                     note.isBlank() -> binding.header.apply {
@@ -74,9 +75,9 @@ class InterviewNumericFragment @Inject constructor(
             tvMax.text = childViewModel.tracker.configValues[2].toString()
             tvUnit.text = childViewModel.tracker.unit
             slider.apply {
-                value = childViewModel.tracker.configValues[1]!!.toFloat()
-                valueTo = childViewModel.tracker.configValues[2]!!.toFloat()
-                valueFrom = childViewModel.tracker.configValues[1]!!.toFloat()
+                value = childViewModel.tracker.configValues[1].toFloat()
+                valueTo = childViewModel.tracker.configValues[2].toFloat()
+                valueFrom = childViewModel.tracker.configValues[1].toFloat()
                 addOnChangeListener { _, value, _ ->
                     childViewModel.onNumericTimeValueChanged(0, value.toInt())
                 }
@@ -95,13 +96,13 @@ class InterviewNumericFragment @Inject constructor(
             childViewModel.streamCurrentValues().collect { curValues ->
                 binding.body.slider.apply {
                     if (curValues.isNotEmpty()) {
-                        if (curValues[0]!! >= valueFrom.toInt() && curValues[0]!! <= valueTo.toInt()) {
-                            value = curValues[0]!!.toFloat()
+                        if (curValues[0] >= valueFrom.toInt() && curValues[0] <= valueTo.toInt()) {
+                            value = curValues[0].toFloat()
                             binding.body.tvVal.text = curValues[0].toString()
                         } else {
-                            value = childViewModel.tracker.configValues[0]!!.toFloat()
+                            value = childViewModel.tracker.configValues[0].toFloat()
                             binding.body.tvVal.text =
-                                childViewModel.tracker.configValues[0]!!.toString()
+                                childViewModel.tracker.configValues[0].toString()
                         }
                     }
                 }

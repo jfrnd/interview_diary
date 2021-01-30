@@ -38,15 +38,22 @@ const val SWITCH_NOTE_INPUT_ADAPTER_POSITION = 2
 const val TIME_PICKER_ADAPTER_POSITION = 3
 
 //Numeric
-const val DEFAULT_VALUE_ADAPTER_POSITION = 3
-const val MIN_VALUE_ADAPTER_POSITION = 4
-const val MAX_VALUE_ADAPTER_POSITION = 5
-const val UNIT_ADAPTER_POSITION = 6
+const val SWITCH_DECIMAL_ADAPTER_POSITION = 3
+const val DEFAULT_VALUE_ADAPTER_POSITION = 4
+const val MIN_VALUE_ADAPTER_POSITION = 5
+const val MAX_VALUE_ADAPTER_POSITION = 6
+const val UNIT_ADAPTER_POSITION = 7
 
 //MC
 const val SWITCH_MULTI_SELECTION_ADAPTER_POSITION = 3
 const val ANSWER_OPTIONS_TITLE_ADAPTER_POSITION = 4
 const val ANSWER_OPTIONS_STARTING_ADAPTER_POSITION = 5
+
+//SWITCH TYPES
+const val SWITCH_TYPE_NOTE_INPUT = 1
+const val SWITCH_TYPE_MULTI_SELECTION = 2
+const val SWITCH_TYPE_DECIMAL = 3
+
 
 class AddEditAdapter @Inject constructor(
     private val glide: RequestManager,
@@ -213,8 +220,9 @@ class AddEditAdapter @Inject constructor(
         fun bind(
             currentItem: Item.Image,
         ) {
-            glide.load(Uri.parse(currentItem.imageUri)).into(binding.
-            ivAddEdit)
+            glide.load(Uri.parse(currentItem.imageUri)).into(
+                binding.ivAddEdit
+            )
         }
     }
 
@@ -242,25 +250,25 @@ class AddEditAdapter @Inject constructor(
         private val binding: ItemAddEditSwitchBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.switchAddEdit.setOnCheckedChangeListener { _, isChecked ->
-                onSwitchChanged?.let { check ->
-                    check(adapterPosition, isChecked)
-                }
-            }
-        }
 
         fun bind(
             currentItem: Item.Switch,
         ) {
+            binding.switchAddEdit.setOnCheckedChangeListener { _, isChecked ->
+                onSwitchChanged?.let { check ->
+                    check(currentItem.switchType, isChecked)
+                }
+            }
+
             binding.root.setOnClickListener {
                 binding.switchAddEdit.isChecked = !binding.switchAddEdit.isChecked
             }
 
             binding.switchAddEdit.isChecked = currentItem.value
-            when (adapterPosition) {
-                SWITCH_NOTE_INPUT_ADAPTER_POSITION -> {
-                    binding.tvHeadline.text = itemView.context.resources.getString(R.string.add_edit_switch_add_notes_headline)
+            when (currentItem.switchType) {
+                SWITCH_TYPE_NOTE_INPUT -> {
+                    binding.tvHeadline.text =
+                        itemView.context.resources.getString(R.string.add_edit_switch_add_notes_headline)
                     binding.tvBody.text =
                         itemView.context.resources.getString(R.string.add_edit_switch_add_notes_body)
                     binding.icSwitch.setImageDrawable(
@@ -271,11 +279,23 @@ class AddEditAdapter @Inject constructor(
                     )
 
                 }
-                SWITCH_MULTI_SELECTION_ADAPTER_POSITION -> {
+                SWITCH_TYPE_MULTI_SELECTION -> {
                     binding.tvHeadline.text =
                         itemView.context.resources.getString(R.string.add_edit_switch_multi_selection_headline)
                     binding.tvBody.text =
                         itemView.context.resources.getString(R.string.add_edit_switch_multi_selection_body)
+                    binding.icSwitch.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            itemView.context,
+                            R.drawable.ic_check_box
+                        )
+                    )
+                }
+                SWITCH_TYPE_DECIMAL -> {
+                    binding.tvHeadline.text =
+                        itemView.context.resources.getString(R.string.add_edit_switch_decimal_headline)
+                    binding.tvBody.text =
+                        itemView.context.resources.getString(R.string.add_edit_switch_decimal_body)
                     binding.icSwitch.setImageDrawable(
                         ContextCompat.getDrawable(
                             itemView.context,
@@ -348,7 +368,8 @@ class AddEditAdapter @Inject constructor(
         ) {
 
             binding.apply {
-                tvHeadline.text = itemView.context.resources.getString(R.string.add_edit_unit_headline)
+                tvHeadline.text =
+                    itemView.context.resources.getString(R.string.add_edit_unit_headline)
                 tvBody.text = itemView.context.resources.getString(R.string.add_edit_unit_body)
                 tvValue.text = currentItem.value
                 tvValue.hint =
@@ -467,7 +488,6 @@ class AddEditAdapter @Inject constructor(
         RecyclerView.ViewHolder(binding.root)
 
 
-
     private var onItemClick: ((Int, Int?, Int?) -> Unit)? = null
 
     fun setOnItemClickListener(listener: (Int, Int?, Int?) -> Unit) {
@@ -559,7 +579,8 @@ class AddEditAdapter @Inject constructor(
 
         data class Switch(
             val position: Int,
-            val value: Boolean
+            val value: Boolean,
+            val switchType: Int
         ) : Item() {
             override val id = position.toLong()
         }

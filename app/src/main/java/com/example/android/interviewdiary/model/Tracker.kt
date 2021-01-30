@@ -33,26 +33,10 @@ data class Tracker(
      * Multiple Choice: [x]:= answerID of an answer option
      */
     val configValues: List<Int>,
-    /**
-     * Only relevant for Multiple Choice Trackers.
-     * Key: AnswerID (corresponds to the answerIDs in the configValues)
-     * Value: The text of the answer itself
-     */
     val answerOptions: Map<Int, String> = emptyMap(),
     val type: TrackerType,
-    /**
-     * Only relevant for Multiple Choice Trackers
-     * If true, it is possible to select multiple answer options when creating a new record
-     */
-    val multiSelectionEnabled: Boolean = false,
-    /**
-     * Only relevant for Numeric Trackers
-     */
     val unit: String = "",
-    /**
-     * If true, it is possible to add notes when creating a record
-     */
-    val notesEnabled: Boolean = true,
+    val enabledFeatures: List<Feature> = listOf(Feature.NOTES)
 ) : Parcelable
 
 @Parcelize
@@ -60,3 +44,5 @@ enum class TrackerType : Parcelable { MULTIPLE_CHOICE, NUMERIC, TIME, YES_NO }
 // TODO Add new tracker types: e.g.
 //      GPS location (e.g. if you are on a round trip,
 //      Text Only input for open questions (e.g. describe your day)
+
+enum class Feature { NOTES, DECIMAL, MULTI_SELECTION }

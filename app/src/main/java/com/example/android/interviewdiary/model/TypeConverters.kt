@@ -11,16 +11,6 @@ class Converters {
     private val databaseFormatter_two: DateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 
     @TypeConverter
-    fun stringToOffsetDateTime(input: String): OffsetDateTime =
-        databaseFormatter_two.parse(input, OffsetDateTime::from)
-
-    @TypeConverter
-    fun offsetDateTimeToString(input: OffsetDateTime): String =
-        input.toString()
-
-
-
-    @TypeConverter
     fun stringToMap(input: String): Map<Int, String> {
         if (input == "") return emptyMap()
         val stringToMapStep1 = input.split(",")
@@ -45,8 +35,19 @@ class Converters {
         TrackerType.values()[i]
 
     @TypeConverter
-    fun trackerTypeToInt(featureType: TrackerType): Int =
-        featureType.ordinal
+    fun trackerTypeToInt(trackerType: TrackerType): Int =
+        trackerType.ordinal
+
+
+    //TODO LIST OF FEATURES!!!
+    @TypeConverter
+    fun listOfIntToListOfFeature(list: List<Int>): List<Feature> =
+        list.map { Feature.values()[it] }
+
+    @TypeConverter
+    fun listOfFeatureToListOfInt(list: List<Feature>): List<Int> =
+        list.map { it.ordinal }
+
 
     @TypeConverter
     fun intListToString(input: List<Int?>): String {
