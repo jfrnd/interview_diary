@@ -73,12 +73,12 @@
 
     <string name="add_edit_question_over_line">Question</string>
 
-    <string name="add_edit_switch_add_notes_headline">Add notes</string>
-    <string name="add_edit_switch_add_notes_body">Turn on/off add notes functionality for this question card</string>
+    <string name="add_edit_switch_add_notes_headline">Notes</string>
+    <string name="add_edit_switch_add_notes_body">Turn on/off notes functionality for this question card</string>
     <string name="add_edit_switch_multi_selection_headline">Multi selection</string>
     <string name="add_edit_switch_multi_selection_body">Turn on/off multi selection for this question card</string>
-    <string name="add_edit_switch_decimal_headline">Allow decimal values</string>
-    <string name="add_edit_switch_decimal_body">"Turn on/off allow decimal values for this question card"</string>
+    <string name="add_edit_switch_decimal_headline">Decimal values</string>
+    <string name="add_edit_switch_decimal_body">"Turn on/off decimal values for this question card"</string>
 
     <string name="add_edit_set_default_value_time_picker">Set a default value</string>
 
@@ -171,5 +171,6 @@
     <string name="example_tracker_km">km</string>
     <string name="example_tracker_how_long_sleep">How many hours did you sleep last night?</string>
     <string name="example_tracker_youtube">How many hours did you spend on Youtube today?</string>
+
 
 </resources>

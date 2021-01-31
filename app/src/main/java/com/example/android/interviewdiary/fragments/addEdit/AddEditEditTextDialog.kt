@@ -30,6 +30,8 @@ class AddEditEditTextDialog : DialogFragment(R.layout.dialog_add_edit_edit_text)
 
         binding = DialogAddEditEditTextBinding.bind(view)
 
+        //TODO Remove decimal in et of numeric
+
         val itemViewType = requireArguments().getInt(ITEM_VIEW_TYPE)
         val index = requireArguments().getInt(INDEX)
         val answerId = requireArguments().getInt(ANSWER_ID)

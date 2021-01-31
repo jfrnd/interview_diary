@@ -113,6 +113,8 @@ class AddEditFragment @Inject constructor(
         addEditAdapter.apply {
             setItemTouchHelper(itemTouchHelper)
 
+            //TODO override onBackClick, implement "Are you sure you want to discard changes"
+
             setOnItemClickListener { itemViewType, index, answerId ->
                 viewModel.onItemClick(itemViewType, index, answerId)
             }

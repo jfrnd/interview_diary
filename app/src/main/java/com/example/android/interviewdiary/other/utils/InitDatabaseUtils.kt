@@ -51,7 +51,7 @@ object InitDatabaseUtils {
                     .toString(),
                 configValues = listOf(10f, 0f, 20f),
                 answerOptions = emptyMap(),
-                enabledFeatures = listOf(Feature.NOTES),
+                enabledFeatures = listOf(Feature.NOTES, Feature.DECIMAL),
                 unit = context.resources.getString(R.string.example_tracker_km),
             ),
             Tracker(
@@ -111,7 +111,7 @@ object InitDatabaseUtils {
                     .toString(),
                 configValues = listOf(75f, 70f, 80f),
                 answerOptions = emptyMap(),
-                enabledFeatures = listOf(Feature.NOTES),
+                enabledFeatures = listOf(Feature.NOTES, Feature.DECIMAL),
                 unit = context.resources.getString(R.string.example_tracker_kg),
             ),
             Tracker(

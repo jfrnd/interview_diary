@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.example.android.interviewdiary.R
+import com.example.android.interviewdiary.R.string.add_edit_switch_decimal_body
 import com.example.android.interviewdiary.databinding.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -295,7 +296,7 @@ class AddEditAdapter @Inject constructor(
                     binding.tvHeadline.text =
                         itemView.context.resources.getString(R.string.add_edit_switch_decimal_headline)
                     binding.tvBody.text =
-                        itemView.context.resources.getString(R.string.add_edit_switch_decimal_body)
+                        itemView.context.resources.getString(add_edit_switch_decimal_body)
                     binding.icSwitch.setImageDrawable(
                         ContextCompat.getDrawable(
                             itemView.context,

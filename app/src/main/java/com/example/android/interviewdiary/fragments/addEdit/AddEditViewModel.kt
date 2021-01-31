@@ -187,8 +187,8 @@ class AddEditViewModel @Inject constructor(
             TrackerType.TIME -> createTimePickerItems()
             TrackerType.YES_NO -> flowOf(listOf())
         }
-        return combine(genericItems, specificItems) { genericItems, specificItems ->
-            genericItems + specificItems
+        return combine(genericItems, specificItems) { genItems, speItems ->
+            genItems + speItems
         }
     }
 
@@ -274,13 +274,13 @@ class AddEditViewModel @Inject constructor(
     private fun List<Float>.containDeletedAnswerOptions(): Boolean {
         val deletedAnswerOptions =
             tracker!!.answerOptions.keys.filter { !answerOptions.value.keys.contains(it) }
-        return this.any { deletedAnswerOptions.contains(it) }
+        return this.any { deletedAnswerOptions.contains(it.toInt()) }
     }
 
     private fun List<Float>.filterDeletedAnswerOptions(): List<Float> {
         val deletedAnswerOptions =
             tracker!!.answerOptions.keys.filter { !answerOptions.value.keys.contains(it) }
-        return this.filter { deletedAnswerOptions.contains(it) }.distinct()
+        return this.filter { deletedAnswerOptions.contains(it.toInt()) }.distinct()
     }
 
     private fun createUpdateTracker() {
@@ -366,7 +366,7 @@ class AddEditViewModel @Inject constructor(
                 } else false
             VIEW_TYPE_ADD_EDIT_ANSWER_OPTION ->
                 if (validateTextInput(input, ANSWER_OPTION_MAX_LENGTH)) {
-                    updateAnswerOption(answerId.toFloat(), input)
+                    updateAnswerOption(answerId.toFloat(), input.capitalize())
                     true
                 } else false
             VIEW_TYPE_ADD_EDIT_UNIT ->
@@ -402,12 +402,12 @@ class AddEditViewModel @Inject constructor(
     fun initEditTextDialog(itemViewType: Int, index: Int, answerId: Int): Pair<String, String> {
         return when (itemViewType) {
             VIEW_TYPE_ADD_EDIT_QUESTION -> QUESTION to question.value
-            VIEW_TYPE_ADD_EDIT_ANSWER_OPTION -> ANSWER_OPTION to answerOptions.value[answerId]!!
+            VIEW_TYPE_ADD_EDIT_ANSWER_OPTION -> ANSWER_OPTION to (answerOptions.value[answerId] ?: error("Answer Option does not exist"))
             VIEW_TYPE_ADD_EDIT_UNIT -> UNIT to unit.value
             VIEW_TYPE_ADD_EDIT_NUMERIC -> when (index) {
-                0 -> DEFAULT_VALUE to configValues.value[0].toString()
-                1 -> MIN_VALUE to configValues.value[1].toString()
-                2 -> MAX_VALUE to configValues.value[2].toString()
+                0 -> DEFAULT_VALUE to configValues.value[0].toInt().toString()
+                1 -> MIN_VALUE to configValues.value[1].toInt().toString()
+                2 -> MAX_VALUE to configValues.value[2].toInt().toString()
                 else -> throw ClassCastException("Index $index of ViewType $VIEW_TYPE_ADD_EDIT_NUMERIC doesn't exist")
             }
             else -> throw ClassCastException("Unknown ViewType $itemViewType")
