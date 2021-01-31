@@ -99,10 +99,19 @@ class RecordListFragment @Inject constructor(
             }
         })
 
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.streamTracker().collect { tracker ->
+                binding.header.apply {
+                    tvQuestion.text = tracker?.question ?: ""
+                    glide.load(tracker?.imageUri).into(binding.header.ivRecordList)
+                }
+            }
+
+        }
+
         binding.apply {
             header.apply {
-                tvQuestion.text = viewModel.tracker!!.question
-                glide.load(viewModel.tracker!!.imageUri).into(binding.header.ivRecordList)
+
                 root.setOnClickListener {
                     viewModel.onEditTrackerClick()
                 }
@@ -123,7 +132,7 @@ class RecordListFragment @Inject constructor(
         itemTouchHelper.attachToRecyclerView(binding.rvRecordList)
 
         recordListAdapter.apply {
-            setTracker(viewModel.tracker)
+
 
             setOnItemClickListener { date ->
                 viewModel.onItemClick(date)
@@ -134,7 +143,13 @@ class RecordListFragment @Inject constructor(
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.recordList().collect { (itemList, focusedPosition) ->
+            viewModel.streamTracker().collect { tracker ->
+                recordListAdapter.setTracker(tracker)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.streamRecordList().collect { (itemList, focusedPosition) ->
                 recordListAdapter.createAndSubmitList(itemList)
                 binding.rvRecordList.scrollToPosition(focusedPosition - 3)
             }
@@ -165,7 +180,7 @@ class RecordListFragment @Inject constructor(
                     is RecordListViewModel.Event.NavigateToEditRecord -> {
                         val action =
                             RecordListFragmentDirections.actionGlobalInterviewNestedNavGraph(
-                                intArrayOf(viewModel.tracker!!.trackerId), event.date.toString()
+                                intArrayOf(viewModel.trackerId!!), event.date.toString()
                             )
                         findNavController().navigate(action)
                     }
@@ -173,7 +188,7 @@ class RecordListFragment @Inject constructor(
                     is RecordListViewModel.Event.NavigateToEditTracker -> {
                         val action =
                             NavGraphDirections.actionGlobalAddUpdateFragment(
-                                viewModel.tracker,
+                                event.tracker,
                                 title = getString(R.string.fragment_title_edit_tracker)
                             )
                         findNavController().navigate(action)

@@ -290,7 +290,7 @@ class HomeFragment @Inject constructor(
                     is HomeViewModel.Event.NavigateToRecordListFragment -> {
                         val action =
                             NavGraphDirections.actionGlobalRecordListFragment(
-                                tracker = event.tracker, date = event.date.toString()
+                                trackerId = event.trackerId, date = event.date.toString()
                             )
                         findNavController().navigate(action)
                     }

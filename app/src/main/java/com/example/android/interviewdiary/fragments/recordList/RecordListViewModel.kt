@@ -12,6 +12,8 @@ import com.example.android.interviewdiary.other.Constants.BUFFER_FUTURE
 import com.example.android.interviewdiary.other.Constants.BUFFER_PAST
 import com.example.android.interviewdiary.other.Constants.DATE
 import com.example.android.interviewdiary.other.Constants.TRACKER
+import com.example.android.interviewdiary.other.Constants.TRACKER_ID
+import com.example.android.interviewdiary.other.Constants.TRACKER_IDS
 import com.example.android.interviewdiary.other.utils.ConverterUtil.toLocalDate
 import com.example.android.interviewdiary.other.utils.ExportCSVUtils
 import com.example.android.interviewdiary.repositories.AppRepository
@@ -33,7 +35,7 @@ class RecordListViewModel @Inject constructor(
     private val state: SavedStateHandle
 ) : ViewModel() {
 
-    val tracker = state.get<Tracker>(TRACKER)
+    val trackerId = state.get<Int>(TRACKER_ID)
 
     private var focusedDate = state.get<String>(DATE)!!.toLocalDate()
         set(value) {
@@ -41,12 +43,16 @@ class RecordListViewModel @Inject constructor(
             state.set(DATE, value)
         }
 
-    private val records = repo.streamAllRecords(tracker!!.trackerId)
+    private val records = repo.streamAllRecords(trackerId!!)
 
     private val eventChannel = Channel<Event>()
     val event = eventChannel.receiveAsFlow()
 
-    fun recordList(): Flow<Pair<ArrayList<RecordListAdapter.Item>, Int>> {
+    fun streamTracker(): Flow<Tracker?> {
+        return repo.streamTracker(trackerId!!)
+    }
+
+    fun streamRecordList(): Flow<Pair<ArrayList<RecordListAdapter.Item>, Int>> {
         val result = ArrayList<RecordListAdapter.Item>()
         var focusedPosition = 1
 
@@ -86,8 +92,9 @@ class RecordListViewModel @Inject constructor(
     }
 
     fun onEditTrackerClick() {
-        viewModelScope.launch {
-            eventChannel.send(Event.NavigateToEditTracker(tracker!!))
+        viewModelScope.launch(Dispatchers.IO) {
+            val tracker = repo.getTracker(trackerId!!)
+            eventChannel.send(Event.NavigateToEditTracker(tracker))
         }
     }
 
@@ -106,7 +113,7 @@ class RecordListViewModel @Inject constructor(
 
     private fun clearRecords() {
         viewModelScope.launch {
-            repo.clearRecords(tracker!!.trackerId)
+            repo.clearRecords(trackerId!!)
         }
     }
 
@@ -133,10 +140,11 @@ class RecordListViewModel @Inject constructor(
 
     fun exportToCSVClicked(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
-            val records = repo.getAllRecords(tracker!!.trackerId)
+            val tracker = repo.getTracker(trackerId!!)
+            val records = repo.getAllRecords(trackerId)
             when {
                 records.isEmpty() -> showGenericSnackBar(MySnackBars.NO_RECORDS_CREATED_YET)
-                else -> ExportCSVUtils.exportRecordsToCSVFile(context, listOf(tracker), records)
+                else -> ExportCSVUtils.exportRecordsToCSVFile(context, listOf(tracker!!), records)
             }
         }
     }

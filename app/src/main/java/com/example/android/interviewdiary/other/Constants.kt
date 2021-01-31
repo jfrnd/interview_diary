@@ -48,4 +48,7 @@ object Constants {
     const val CURRENT_VALUES = "current_values"
     const val NOTE_DIALOG_MODE = "note_dialog_mode"
 
+    // Record List
+    const val TRACKER_ID = "tracker_id"
+
 }

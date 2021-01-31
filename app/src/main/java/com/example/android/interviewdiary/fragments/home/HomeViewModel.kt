@@ -123,7 +123,7 @@ class HomeViewModel @Inject constructor(
         object NavigateToBackupFragment : Event()
 
         data class NavigateToRecordListFragment(
-            val tracker: Tracker,
+            val trackerId: Int,
             val date: LocalDate
         ) : Event()
 
@@ -195,7 +195,7 @@ class HomeViewModel @Inject constructor(
     private fun navigateToRecordListFragment(tracker: Tracker) = viewModelScope.launch {
         eventChannel.send(
             Event.NavigateToRecordListFragment(
-                tracker,
+                tracker.trackerId,
                 currentDate.value
             )
         )

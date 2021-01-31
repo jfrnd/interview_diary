@@ -72,8 +72,8 @@
         android:label="@string/fragment_title_record_list"
         tools:layout="@layout/fragment_record_list">
         <argument
-            android:name="tracker"
-            app:argType="com.example.android.interviewdiary.model.Tracker" />
+            android:name="tracker_id"
+            app:argType="integer" />
         <argument
             android:name="date"
             app:argType="string" />
