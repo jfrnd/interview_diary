@@ -107,65 +107,91 @@ class AddEditAdapter @Inject constructor(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val bindingImage =
-            ItemAddEditImageBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        val bindingQuestion =
-            ItemAddEditQuestionBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-
-        val bindingSwitch =
-            ItemAddEditSwitchBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-
-        val bindingTimePicker =
-            ItemAddEditTimePickerBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        val bindingNumeric =
-            ItemAddEditNumericValueBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        val bindingAnswerOption =
-            ItemAddEditAnswerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        val bindingAnswerOptionHeader =
-            ItemAddEditAnswerListHeaderBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        val bindingAddButton =
-            ItemAddEditAddButtonBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-
         return when (viewType) {
-            VIEW_TYPE_ADD_EDIT_IMAGE -> ImageViewHolder(bindingImage)
-            VIEW_TYPE_ADD_EDIT_QUESTION -> QuestionViewHolder(bindingQuestion)
-            VIEW_TYPE_ADD_EDIT_SWITCH -> SwitchViewHolder(bindingSwitch)
-            VIEW_TYPE_ADD_EDIT_TIME_PICKER -> TimePickerViewHolder(bindingTimePicker)
-            VIEW_TYPE_ADD_EDIT_NUMERIC -> NumericViewHolder(bindingNumeric)
-            VIEW_TYPE_ADD_EDIT_UNIT -> UnitViewHolder(bindingNumeric)
-            VIEW_TYPE_ADD_EDIT_ANSWER_OPTION -> AnswerOptionViewHolder(bindingAnswerOption)
-            VIEW_TYPE_ADD_EDIT_ADD_BUTTON -> AddButtonViewHolder(bindingAddButton)
-            VIEW_TYPE_ADD_EDIT_ANSWER_OPTION_HEADER -> AnswerOptionHeaderViewHolder(
-                bindingAnswerOptionHeader
-            )
+            VIEW_TYPE_ADD_EDIT_IMAGE -> {
+                val bindingImage =
+                    ItemAddEditImageBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                ImageViewHolder(bindingImage)
+            }
+            VIEW_TYPE_ADD_EDIT_QUESTION -> {
+                val bindingQuestion =
+                    ItemAddEditQuestionBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                QuestionViewHolder(bindingQuestion)
+            }
+            VIEW_TYPE_ADD_EDIT_SWITCH -> {
+                val bindingSwitch =
+                    ItemAddEditSwitchBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                SwitchViewHolder(bindingSwitch)
+            }
+            VIEW_TYPE_ADD_EDIT_TIME_PICKER -> {
+                val bindingTimePicker =
+                    ItemAddEditTimePickerBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                TimePickerViewHolder(bindingTimePicker)
+            }
+            VIEW_TYPE_ADD_EDIT_NUMERIC -> {
+                val bindingNumeric =
+                    ItemAddEditNumericValueBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                NumericViewHolder(bindingNumeric)
+            }
+            VIEW_TYPE_ADD_EDIT_UNIT -> {
+                val bindingNumeric =
+                    ItemAddEditNumericValueBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                UnitViewHolder(bindingNumeric)
+            }
+            VIEW_TYPE_ADD_EDIT_ANSWER_OPTION -> {
+                val bindingAnswerOption =
+                    ItemAddEditAnswerBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                AnswerOptionViewHolder(bindingAnswerOption)
+            }
+            VIEW_TYPE_ADD_EDIT_ADD_BUTTON -> {
+                val bindingAddButton =
+                    ItemAddEditAddButtonBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+
+                AddButtonViewHolder(bindingAddButton)
+            }
+            VIEW_TYPE_ADD_EDIT_ANSWER_OPTION_HEADER -> {
+                val bindingAnswerOptionHeader =
+                    ItemAddEditAnswerListHeaderBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                AnswerOptionHeaderViewHolder(
+                    bindingAnswerOptionHeader
+                )
+            }
             else -> throw ClassCastException("Unknown viewType $viewType")
         }
     }
