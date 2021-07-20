@@ -17,16 +17,14 @@ The idea of this app is to help you to find out more about yourself. In order to
 -interview mode, in which the app "is asking" the questions<br/>
 -listview of all created answer items for each question card<br/>
 -CSV Sheet export (one sheet for each question card)<br/>
-and of cource, an amazing UI with some handy features... ;) <br/>
 <br/>
-**The following features will be implemented in the future:**<br/>
+**The following features can be implemented in the future:**<br/>
 <br/>
 -Backup functionality<br/>
 -Settings including manual language and theme change<br/>
 -Sorting functionality including something like "categories"<br/>
 -Simple evaluation funcionality like calculating average values and maybe pie chards etc. - but it won't be too sophisticated. The idea is that the user does the evaluation of the data on the computer with tools like Excel.<br/>
 -Implementation of a PIXABAY API for a more convenient image search<br/>
-and of course, some more handy UI features... :p <br/>
 <br/>
 **But with regard to the original purpose of this project, I will now focus on the topic "testing" first!**<br/>
 <br/>
